@@ -1,4 +1,5 @@
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.GraphicsObject;
 
 public class Minesweeper {
     private CanvasWindow canvas = new CanvasWindow("Minesweeper", 600, 600);
@@ -6,6 +7,14 @@ public class Minesweeper {
 
     public Minesweeper() {
         canvas.add(grid.getGroup());
+        canvas.onClick(e -> {
+            GraphicsObject object = canvas.getElementAt(e.getPosition());
+            if (object!=null){
+                if (object.getClass()==Tile.class){
+                    grid.clickTile(canvas, object);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
