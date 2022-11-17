@@ -6,7 +6,7 @@ import edu.macalester.graphics.Rectangle;
 public class Tile extends Rectangle {
     private Color color = Color.GRAY;
     private Boolean bomb;
-    private int number = 1;
+    private int number = 0;
 
     private Random rand = new Random();
 
@@ -28,7 +28,7 @@ public class Tile extends Rectangle {
         this.number = number;
     }
     public String toString() {
-        return ("Tile at: " + getX() + ", " + getY() + (bomb ? " is a bomb" : " has number" + number));
+        return ("Tile at: " + getX() + ", " + getY() + (bomb ? " is a bomb" : " has number " + number));
     }
 
 }

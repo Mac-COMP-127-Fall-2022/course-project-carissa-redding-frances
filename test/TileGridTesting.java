@@ -16,7 +16,7 @@ public class TileGridTesting {
     void getNeighboringTilesTest() {
         CanvasWindow canvas = new CanvasWindow("stinky", 600, 600);
         int nullCount = 0;
-        TileGrid grid = new TileGrid(10, 600);
+        TileGrid grid = new TileGrid(10, 600, canvas);
         canvas.add(grid.getGroup());
         for(Tile tile : grid.getTileList()) {
             List<Tile> neighbors = grid.getNeighboringTiles(tile);

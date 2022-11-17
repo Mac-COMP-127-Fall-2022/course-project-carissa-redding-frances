@@ -13,9 +13,11 @@ public class TileGrid {
     private GraphicsGroup group = new GraphicsGroup();
     private int tileSize;
     private ArrayList<Tile> tileList = new ArrayList<Tile>();
+    private CanvasWindow canvas;
 
-    public TileGrid(int gridSize, int canvasSize) {
+    public TileGrid(int gridSize, int canvasSize, CanvasWindow canvas) {
         this.tileSize = canvasSize/gridSize;
+        this.canvas = canvas;
         int x = 0;
         int y = 0;
         for (int i = 0; i <= gridSize*gridSize; i++) { // may refactor as nested c-style loops
@@ -30,9 +32,27 @@ public class TileGrid {
                 x+=tileSize;
             }
         }
+
+        // loops through tiles and sets appropriate number
+        for (Tile tile : tileList) {
+            int bombCount = 0;
+            for (Tile neighbor : getNeighboringTiles(tile)) {
+                if (neighbor!=null) {
+                    System.out.println("NEIGHBOR FOUND");
+                    if (neighbor.getBomb()) {
+                        bombCount++;
+                    }
+                }
+            }
+            tile.setNumber(bombCount);
+        }
+
+        for (Tile tile : tileList) {
+            System.out.println(tile.getNumber());
+        }
     }
 
-    public void clickTile(CanvasWindow canvas, GraphicsObject tileObject) {
+    public void clickTile(GraphicsObject tileObject) {
         GraphicsText numberAsObject;
         for (Tile tile : tileList) {
             if (tile == tileObject){
@@ -56,14 +76,18 @@ public class TileGrid {
      */
     public List<Tile> getNeighboringTiles(Tile tile) {
         Point center = tile.getCenter();
-        List<Tile> neighbors = new ArrayList<>(4);
+        List<Tile> neighbors = new ArrayList<>(8);
         List<Point> neighborPoints = new ArrayList<Point>(List.of(center.withY(center.getY() - tileSize), // north
                                                              center.withY(center.getY() + tileSize), // south
                                                              center.withX(center.getX() - tileSize), // west
-                                                             center.withX(center.getX() + tileSize))); // east
+                                                             center.withX(center.getX() + tileSize), // east
+                                                             new Point(center.getX()+tileSize, center.getY()-tileSize), // northeast
+                                                             new Point(center.getX()+tileSize, center.getY()+tileSize), // southeast
+                                                             new Point(center.getX()-tileSize, center.getY()+tileSize), // southwest
+                                                             new Point(center.getX()-tileSize, center.getY()-tileSize))); // northwest
                                     
         for(Point point : neighborPoints) {
-            neighbors.add(getTileAt(point, tile.getCanvas()));
+            neighbors.add(getTileAt(point));
         }
         return neighbors;
     }
@@ -71,8 +95,9 @@ public class TileGrid {
     /*
      * Returns the tile at a given point. Will return null if a tile is not present.
      */
-    public Tile getTileAt(Point p, CanvasWindow canvas) {
-        Object tester = canvas.getElementAt(p);
+    public Tile getTileAt(Point p) {
+        Object tester = group.getElementAt(p);
+
         if(tester != null && tileList.contains(tester)) {
             return tileList.get(tileList.indexOf(tester));
         } else {
