@@ -24,4 +24,11 @@ public class Tile extends Rectangle {
         return number;
     }
 
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    public String toString() {
+        return ("Tile at: " + getX() + ", " + getY() + (bomb ? " is a bomb" : " has number" + number));
+    }
+
 }
