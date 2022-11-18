@@ -1,23 +1,27 @@
 import java.awt.Color;
-import java.util.Random;
 
 import edu.macalester.graphics.Rectangle;
 
 public class Tile extends Rectangle {
     private Color color = Color.GRAY;
-    private Boolean bomb;
+    private Boolean bomb = false;
     private int number = 0;
+    private boolean beenClicked = false;
 
-    private Random rand = new Random();
+    // private Random rand = new Random();
 
     public Tile(int size) {
         super(0,0, size, size);
         this.setFillColor(color);
-        this.bomb = rand.nextBoolean();
+        //this.bomb = rand.nextBoolean(); // TODO
     }
 
     public Boolean getBomb() {
         return bomb;
+    }
+
+    public void setBomb(boolean bomb) {
+        this.bomb = bomb;
     }
 
     public int getNumber() {
@@ -29,6 +33,14 @@ public class Tile extends Rectangle {
     }
     public String toString() {
         return ("Tile at: " + getX() + ", " + getY() + (bomb ? " is a bomb" : " has number " + number));
+    }
+
+    public boolean clicked() {
+        return beenClicked;
+    }
+
+    public void setClicked(boolean clicked) {
+        this.beenClicked = clicked;
     }
 
 }
