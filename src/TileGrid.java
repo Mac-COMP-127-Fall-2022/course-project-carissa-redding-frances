@@ -24,21 +24,15 @@ public class TileGrid {
         this.numBombs = numBombs;
         this.tileSize = canvasSize/gridSize;
         this.canvas = canvas;
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i <= gridSize*gridSize; i++) { // may refactor as nested c-style loops
-            Tile tile = new Tile(tileSize);
-            tile.setPosition(x,y);
-            group.add(tile);
-            tileList.add(tile);
-            if((x/tileSize)+1 == gridSize) {
-                y += tileSize;
-                x = 0;
-            } else {
-                x+=tileSize;
+
+        for(int i = 0; i < gridSize; i++) {
+            for(int j = 0; j < gridSize; j++) {
+                Tile tile = new Tile(tileSize);
+                tile.setPosition(i * tileSize, j * tileSize);
+                group.add(tile);
+                tileList.add(tile);
             }
         }
-
     }
 
     public void clickTile(GraphicsObject tileObject) {
@@ -122,8 +116,8 @@ public class TileGrid {
         List<Tile> copiedList = new ArrayList<>(tileList);
         Set<Tile> neighborSet = new HashSet<Tile>(getNeighboringTiles(clickedTile));
         for (Tile tile : getNeighboringTiles(clickedTile)) {
-            neighborSet.addAll(getNeighboringTiles(tile));
-        }
+            neighborSet.addAll(getNeighboringTiles(tile)); // TODO throws a bunch of error when first clicked tile is on the edge
+        }                                                  // (doesn't interrupt gameplay, but may be something to catch)
         copiedList.removeAll(neighborSet);
         Collections.shuffle(copiedList, rand);
         for (int i=0; i<numBombs; i++) {
