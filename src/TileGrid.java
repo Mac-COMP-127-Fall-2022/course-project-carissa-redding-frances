@@ -59,10 +59,13 @@ public class TileGrid {
         }
     }
 
-    /*
+    /**
      * Returns a list of the four tiles neighboring a given tile in the format {north, south, west, east}. Entries may be null if tile is on an edge.
      */
     public List<Tile> getNeighboringTiles(Tile tile) {
+        if(tile == null) {
+            return null;
+        }
         Point center = tile.getCenter();
         List<Tile> neighbors = new ArrayList<>(8);
         List<Point> neighborPoints = new ArrayList<Point>(List.of(center.withY(center.getY() - tileSize), // north
@@ -80,7 +83,7 @@ public class TileGrid {
         return neighbors;
     }
 
-    /*
+    /**
      * Returns the tile at a given point. Will return null if a tile is not present.
      */
     public Tile getTileAt(Point p) {
@@ -96,7 +99,7 @@ public class TileGrid {
     public GraphicsGroup getGroup() {
         return group;
     }
-    /*
+    /**
      * currently only for internal testing
      */
     public ArrayList<Tile> getTileList() {
@@ -116,10 +119,12 @@ public class TileGrid {
         Random rand = new Random();
         Tile clickedTile = getTileAt(clickLocation);
         List<Tile> copiedList = new ArrayList<>(tileList);
-        Set<Tile> neighborSet = new HashSet<Tile>(getNeighboringTiles(clickedTile));
+        Set<Tile> neighborSet = new HashSet<Tile>();
         for (Tile tile : getNeighboringTiles(clickedTile)) {
-            neighborSet.addAll(getNeighboringTiles(tile)); // TODO throws a bunch of error when first clicked tile is on the edge
-        }                                                  // (doesn't interrupt gameplay, but may be something to catch)
+            if(tile != null) {
+                neighborSet.addAll(getNeighboringTiles(tile));
+            }
+        }
         copiedList.removeAll(neighborSet);
         Collections.shuffle(copiedList, rand);
         for (int i=0; i<numBombs; i++) {
