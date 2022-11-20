@@ -35,23 +35,26 @@ public class TileGrid {
         }
     }
 
-    public void clickTile(GraphicsObject tileObject) {
-        if(tileObject == null) {
+    public void clickTile(Tile tile) {
+        if(tile == null || tile.clicked()) {
             return;
         }
         GraphicsText numberAsObject;
-        for (Tile tile : tileList) {
-            if (tile == tileObject) {
-                tile.setClicked(true);
-                if (tile.getBomb()) {
-                    tile.setFillColor(Color.RED);
-                } else {
-                    tile.setFillColor(Color.GREEN);
-                    numberAsObject = new GraphicsText(tile.getNumber()+"");
-                    numberAsObject.setFillColor(Color.BLUE);
-                    numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight()*.5);
-                    numberAsObject.setCenter(tile.getCenter());
-                    canvas.add(numberAsObject);
+        tile.setClicked(true);
+        
+        if (tile.getBomb()) {
+            tile.setFillColor(Color.RED);
+        } else {
+            tile.setFillColor(Color.GREEN);
+            if(tile.getNumber() > 0) {
+                numberAsObject = new GraphicsText(tile.getNumber()+"");
+                numberAsObject.setFillColor(Color.BLUE);
+                numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight()*.5);
+                numberAsObject.setCenter(tile.getCenter());
+                canvas.add(numberAsObject);
+            } else {
+                for(Tile neighbor : getNeighboringTiles(tile)) {
+                    clickTile(neighbor);
                 }
             }
         }
@@ -95,7 +98,7 @@ public class TileGrid {
         return group;
     }
     /*
-     * currently only for internal testing TODO
+     * currently only for internal testing
      */
     public ArrayList<Tile> getTileList() {
         return new ArrayList<>(tileList);

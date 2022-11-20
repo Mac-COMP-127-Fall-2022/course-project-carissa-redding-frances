@@ -8,12 +8,9 @@ public class Tile extends Rectangle {
     private int number = 0;
     private boolean beenClicked = false;
 
-    // private Random rand = new Random();
-
     public Tile(int size) {
         super(0,0, size, size);
         this.setFillColor(color);
-        //this.bomb = rand.nextBoolean(); // TODO
     }
 
     public Boolean getBomb() {
