@@ -18,7 +18,6 @@ public class TileGrid {
     private int tileSize;
     private ArrayList<Tile> tileList = new ArrayList<Tile>();
     private CanvasWindow canvas;
-    // private boolean beenClicked = false;
     private int numBombs;
 
     public TileGrid(int gridSize, int canvasSize, CanvasWindow canvas, int numBombs) {
@@ -43,9 +42,12 @@ public class TileGrid {
     }
 
     public void clickTile(GraphicsObject tileObject) {
+        if(tileObject == null) {
+            return;
+        }
         GraphicsText numberAsObject;
         for (Tile tile : tileList) {
-            if (tile == tileObject){
+            if (tile == tileObject) {
                 tile.setClicked(true);
                 if (tile.getBomb()) {
                     tile.setFillColor(Color.RED);
@@ -56,7 +58,6 @@ public class TileGrid {
                     numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight()*.5);
                     numberAsObject.setCenter(tile.getCenter());
                     canvas.add(numberAsObject);
-                    
                 }
             }
         }
