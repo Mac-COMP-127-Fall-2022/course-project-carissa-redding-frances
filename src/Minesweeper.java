@@ -1,20 +1,27 @@
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.events.ModifierKey;
 
 public class Minesweeper {
-    private CanvasWindow canvas = new CanvasWindow("Minesweeper", 600, 600);
+    private int windowSize = 600;
+    private CanvasWindow canvas = new CanvasWindow("Minesweeper", windowSize, windowSize);
     private TileGrid grid;
 
     public Minesweeper() {
         int gridSize = 10;
         int numBombs = 15;
-        grid = new TileGrid(gridSize, 600, canvas, numBombs);
+        grid = new TileGrid(gridSize, windowSize, canvas, numBombs);
+        grid.getGroup().setPosition(0,0);
         canvas.add(grid.getGroup());
         
         canvas.onClick(e -> {
-            if(!grid.checkClicked()) {
-                grid.assignBombPositions(e.getPosition());
+            if (e.getModifiers().contains(ModifierKey.SHIFT)) {
+                grid.flagTile(grid.getTileAt(e.getPosition()));
+            } else {
+                if(!grid.checkClicked()) {
+                    grid.assignBombPositions(e.getPosition());
+                }
+                grid.clickTile(grid.getTileAt(e.getPosition()));
             }
-            grid.clickTile(grid.getTileAt(e.getPosition()));
         });
     }
 

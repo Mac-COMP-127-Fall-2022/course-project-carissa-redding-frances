@@ -2,6 +2,7 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
+import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 
 import java.awt.Color;
@@ -59,6 +60,23 @@ public class TileGrid {
         }
     }
 
+    public void flagTile(Tile tile) {
+        if(tile == null || (tile.clicked() && !tile.getFlagged())) {
+            return;
+        }
+
+        if(!tile.getFlagged()) {
+            group.add(tile.getFlag());
+            tile.getFlag().setCenter(tile.getCenter());
+            tile.setFlagged(true);
+            tile.setClicked(true);
+        } else {
+            group.remove(tile.getFlag());
+            tile.setFlagged(false);
+            tile.setClicked(false);
+        }
+    }
+
     /**
      * Returns a list of the four tiles neighboring a given tile in the format {north, south, west, east}. Entries may be null if tile is on an edge.
      */
@@ -87,13 +105,12 @@ public class TileGrid {
      * Returns the tile at a given point. Will return null if a tile is not present.
      */
     public Tile getTileAt(Point p) {
-        Object tester = group.getElementAt(p);
-
-        if(tester != null && tileList.contains(tester)) {
-            return tileList.get(tileList.indexOf(tester));
-        } else {
-            return null;
+        for(Tile tile : tileList) {
+            if(tile.testHit(p.getX() , p.getY())) {
+                return tile;
+            }
         }
+        return null;
     }
 
     public GraphicsGroup getGroup() {

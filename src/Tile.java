@@ -1,5 +1,6 @@
 import java.awt.Color;
 
+import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
 public class Tile extends Rectangle {
@@ -7,10 +8,14 @@ public class Tile extends Rectangle {
     private Boolean bomb = false;
     private int number = 0;
     private boolean beenClicked = false;
+    private boolean flagged = false;
+    private Image flag = new Image("images/flag.png");
 
     public Tile(int size) {
         super(0,0, size, size);
         this.setFillColor(color);
+        flag.setMaxHeight(size);
+        flag.setCenter(getCenter());
     }
 
     public Boolean getBomb() {
@@ -34,6 +39,25 @@ public class Tile extends Rectangle {
 
     public boolean clicked() {
         return beenClicked;
+    }
+
+    public boolean getFlagged() {
+        return flagged;
+    }
+
+    public void setFlagged(boolean flag) {
+        flagged = flag;
+    }
+    //     flagged = flag;
+    //     if(flag) {
+            
+    //     } else {
+
+    //     }
+    // }
+
+    public Image getFlag() {
+        return flag;
     }
 
     public void setClicked(boolean clicked) {
