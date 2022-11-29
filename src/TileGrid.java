@@ -79,6 +79,9 @@ public class TileGrid {
         for (Tile tile : tileList) {
             if(tile.getBomb()&&tile!=clickedTile){
                 tile.setFillColor(Color.ORANGE);
+                if (tile.getFlagged()) {
+                    group.remove(tile.getFlag());
+                }
             }
         }
     }

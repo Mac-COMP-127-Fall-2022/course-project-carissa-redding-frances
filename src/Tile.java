@@ -9,7 +9,7 @@ public class Tile extends Rectangle {
     private int number = 0;
     private boolean beenClicked = false;
     private boolean flagged = false;
-    private Image flag = new Image("images/flag.png");
+    private Image flag = new Image("images/redflag.png");
 
     public Tile(int size) {
         super(0,0, size, size);
