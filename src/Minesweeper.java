@@ -3,7 +3,7 @@ import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.events.ModifierKey;
 import edu.macalester.graphics.ui.Button;
-
+//----------------------------------------|----------------------------------------
 public class Minesweeper {
     private int windowSize = 600;
     private CanvasWindow canvas = new CanvasWindow("Minesweeper", windowSize, windowSize);
@@ -13,14 +13,17 @@ public class Minesweeper {
     private int numBombs;
     private GraphicsText displayedText = new GraphicsText();
 
+//-------------------------------------RUNTIME-------------------------------------
     public Minesweeper() {  
         chooseMode();
     }
-
+    public static void main(String[] args) {
+        new Minesweeper();
+    }
+//----------------------------------USER INTERFACE---------------------------------
     private void chooseMode() {
         displayedText.setText("Minesweeper");
         formatText();
-        canvas.add(displayedText);
         Button easyButton = new Button("Easy");
         easyButton.setCenter(windowSize*.25, windowSize*.7);
         Button mediumButton = new Button("Medium");
@@ -49,13 +52,36 @@ public class Minesweeper {
             playGame();
         });
     }
+    private void endGameMessage(boolean win) {
+        displayedText.setText("You " + (win ?  "Win!" : "Lose!"));
+        formatText();
+        Button exit = new Button("Exit");
+        Button replay = new Button("Play Again");
+
+        exit.setCenter(windowSize*.4, windowSize*.7);
+        replay.setCenter(windowSize*.6, windowSize*.7);
+
+        canvas.add(exit);
+        canvas.add(replay);
+
+        exit.onClick(() -> {
+            canvas.closeWindow();
+        }); 
+
+        replay.onClick(() -> {
+            canvas.removeAll();
+            chooseMode();
+        });
+    }
 
     private void formatText() {
         displayedText.setFont(FontStyle.BOLD, windowSize * 0.1);
         displayedText.setWrappingWidth(windowSize - 50);
         displayedText.setCenter(canvas.getCenter());
+        canvas.add(displayedText);
     }
 
+//-------------------------------------GAMEPLAY------------------------------------
     public void playGame() {
         canvas.removeAll();
         running = true;
@@ -64,27 +90,30 @@ public class Minesweeper {
         canvas.add(grid.getGroup());
 
         canvas.onClick(e -> {
-            if(running){
+            if(running) {
                 if (e.getModifiers().contains(ModifierKey.SHIFT)) {
                     grid.flagTile(grid.getTileAt(e.getPosition()));
                 } else {
                     if(!grid.checkClicked()) {
                         grid.assignBombPositions(e.getPosition());
                     }
-                    if(!grid.clickTile(grid.getTileAt(e.getPosition()))){
+                    if(!grid.clickTile(grid.getTileAt(e.getPosition()))) {
                         running = false;
-                        // display win/lose text
+                        try {
+                            canvas.wait(50);
+                        } catch(Exception interrupted) {
+                        }
+                        endGameMessage(grid.checkWin());
                     }
                 }
             }
         });
     }
 
-    public void setRunning(boolean running){
+    public void setRunning(boolean running) {
         this.running = running;
     }
+//-------------------------------------HELPERS-------------------------------------
 
-    public static void main(String[] args) {
-        new Minesweeper();
-    }
+// TODO: put new color palette here
 }

@@ -2,7 +2,6 @@ import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
-// import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 
 import java.awt.Color;
@@ -35,7 +34,7 @@ public class TileGrid {
         }
     }
 
-    public Boolean checkWin() {
+    public boolean checkWin() {
         for (Tile tile : tileList) {
             if(!tile.clicked()&&!tile.getBomb()) {
                 return false;
@@ -44,7 +43,7 @@ public class TileGrid {
         return true;
     }
 
-    public Boolean clickTile(Tile tile) {
+    public boolean clickTile(Tile tile) {
         if(tile == null || tile.clicked()) {
             return true;
         }
@@ -187,5 +186,4 @@ public class TileGrid {
             tile.setNumber(bombCount);
         }
     }
-
 }
