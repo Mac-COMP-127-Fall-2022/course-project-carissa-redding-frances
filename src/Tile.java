@@ -21,7 +21,6 @@ public class Tile extends Rectangle {
     public Boolean getBomb() {
         return bomb;
     }
-
     public void setBomb(boolean bomb) {
         this.bomb = bomb;
     }
@@ -33,10 +32,6 @@ public class Tile extends Rectangle {
     public void setNumber(int number) {
         this.number = number;
     }
-    public String toString() {
-        return ("Tile at: " + getX() + ", " + getY() + (bomb ? " is a bomb" : " has number " + number));
-    }
-
     public boolean clicked() {
         return beenClicked;
     }
@@ -48,13 +43,6 @@ public class Tile extends Rectangle {
     public void setFlagged(boolean flag) {
         flagged = flag;
     }
-    //     flagged = flag;
-    //     if(flag) {
-            
-    //     } else {
-
-    //     }
-    // }
 
     public Image getFlag() {
         return flag;
@@ -63,5 +51,7 @@ public class Tile extends Rectangle {
     public void setClicked(boolean clicked) {
         this.beenClicked = clicked;
     }
-
+    public String toString() {
+        return ("Tile at: " + getX() + ", " + getY() + (bomb ? " is a bomb" : " has number " + number));
+    }
 }

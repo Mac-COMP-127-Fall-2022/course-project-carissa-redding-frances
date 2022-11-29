@@ -1,3 +1,7 @@
-# Project Title Goes Here
+# Minesweeper
 
-Info about your project goes here
+The game minesweeper, with three modes of difficulty.
+
+
+Code separator thing for copy-pasting:
+//----------------------------------------|----------------------------------------
