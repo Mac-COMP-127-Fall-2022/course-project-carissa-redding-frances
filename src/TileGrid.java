@@ -63,14 +63,14 @@ public class TileGrid {
         tile.setClicked(true);
 
         if (tile.getBomb()) {
-            tile.setFillColor(Color.RED);
+            tile.setFillColor(Minesweeper.red);
             displayBombs(tile);
             return false;
         } else {
-            tile.setFillColor(Color.GREEN);
+            tile.setFillColor(Minesweeper.brown);
             if (tile.getNumber() > 0) {
                 numberAsObject = new GraphicsText(tile.getNumber() + "");
-                numberAsObject.setFillColor(Color.BLUE);
+                numberAsObject.setFillColor(Minesweeper.blue);
                 numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight() * .5);
                 numberAsObject.setCenter(tile.getCenter());
                 canvas.add(numberAsObject);
@@ -116,7 +116,7 @@ public class TileGrid {
     private void displayBombs(Tile clickedTile) {
         for (Tile tile : tileList) {
             if (tile.getBomb() && tile != clickedTile) {
-                tile.setFillColor(Color.ORANGE);
+                tile.setFillColor(Minesweeper.orange);
                 if (tile.getFlagged()) {
                     group.remove(tile.getFlag());
                 }

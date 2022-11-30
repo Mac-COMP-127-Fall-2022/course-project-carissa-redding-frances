@@ -4,7 +4,7 @@ import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 
 public class Tile extends Rectangle {
-    private Color color = Color.GRAY;
+    private Color color = Minesweeper.green;
     private Boolean bomb = false;
     private int number = 0;
     private boolean beenClicked = false;
