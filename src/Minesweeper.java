@@ -116,13 +116,13 @@ public class Minesweeper {
 
         canvas.onClick(e -> {
             if (running) {
-                if (e.getModifiers().contains(ModifierKey.SHIFT)) {
+                if (!grid.checkClicked()) { // initial click
+                    grid.assignBombPositions(e.getPosition());
+                    grid.clickTile(grid.getTileAt(e.getPosition()));
+                } else if (e.getModifiers().contains(ModifierKey.SHIFT)) {
                     grid.flagTile(grid.getTileAt(e.getPosition()));
                 } else {
-                    if (!grid.checkClicked()) {
-                        grid.assignBombPositions(e.getPosition());
-                    }
-                    if (!grid.clickTile(grid.getTileAt(e.getPosition()))) {
+                    if (!grid.clickTile(grid.getTileAt(e.getPosition()))) { // This if statement calls the main game behavior
                         running = false;
                         endGameMessage(grid.checkWin());
                     }
@@ -136,8 +136,6 @@ public class Minesweeper {
         this.running = running;
     }
     // -------------------------------------HELPERS-------------------------------------
-
-    // TODO: put new color palette here
     public static Color green = new Color(108,120,55);
     public static Color grey = new Color(201,201,201);
     public static Color red = new Color(142,32,32);
