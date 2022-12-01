@@ -48,7 +48,7 @@ public class Minesweeper {
         canvas.add(customButton);
 
         easyButton.onClick(() -> {
-            gridSize = 10;
+            gridSize = 11;
             numBombs = 15;
             playGame();
         });
@@ -60,7 +60,7 @@ public class Minesweeper {
         });
 
         hardButton.onClick(() -> {
-            gridSize = 20;
+            gridSize = 21;
             numBombs = 99;
             playGame();
         });

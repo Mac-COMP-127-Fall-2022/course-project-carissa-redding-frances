@@ -21,12 +21,13 @@ public class Tile extends GraphicsGroup {
     private static boolean chessboard = false;
     private GraphicsText numberAsObject = new GraphicsText();
 
-    public Tile(int size) {
+    public Tile(double size) {
         tile = new Rectangle(0,0, size, size);
         tile.setFillColor(hiddenColor[chessboard? 0:1]);
         add(tile);
         flagImage.setMaxHeight(size);
         flagImage.setCenter(getCenter());
+        chessboard = !chessboard;
     }
 
     /* --------------------------------- Visuals -------------------------------- */
@@ -59,7 +60,7 @@ public class Tile extends GraphicsGroup {
     public Boolean getBomb() {
         return bomb;
     }
-    
+
     public void setBomb(boolean bomb) {
         this.bomb = bomb;
     }

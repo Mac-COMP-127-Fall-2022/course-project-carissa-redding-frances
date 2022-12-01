@@ -10,11 +10,11 @@ import edu.macalester.graphics.Point;
 
 public class TileGrid {
     private GraphicsGroup group = new GraphicsGroup();
-    private int tileSize;
+    private double tileSize;
     private ArrayList<Tile> tileList = new ArrayList<Tile>();
     private int numBombs;
 
-    public TileGrid(int gridSize, int canvasSize, int numBombs) {
+    public TileGrid(int gridSize, double canvasSize, int numBombs) {
         this.numBombs = numBombs;
         this.tileSize = canvasSize / gridSize;
 
