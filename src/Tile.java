@@ -31,14 +31,18 @@ public class Tile extends GraphicsGroup {
     }
 
     /* --------------------------------- Visuals -------------------------------- */
-    public void setFlag(boolean flag) {
-        if(flag) {
+    public void setFlag() {
+        if(clicked && !this.flag) {
+            return;
+        }
+        if(!flag) {
             flagImage.setCenter(tile.getCenter());
             add(flagImage);
         } else {
             remove(flagImage);
         }
-        this.flag = flag;
+        clicked = !clicked;
+        flag = !flag;
     }
 
     public void reveal(boolean gameOver) {
@@ -54,6 +58,7 @@ public class Tile extends GraphicsGroup {
                 add(numberAsObject);
             }
         }
+        clicked = true;
     }
 
     /* ---------------------------------- Logic --------------------------------- */
@@ -79,10 +84,6 @@ public class Tile extends GraphicsGroup {
 
     public boolean getFlag() {
         return flag;
-    }
-
-    public void setClicked(boolean clicked) {
-        this.clicked = clicked;
     }
 
     public String toString() {

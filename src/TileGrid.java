@@ -39,16 +39,12 @@ public class TileGrid {
         if (tile == null || tile.getClicked()) {
             return true;
         }
-        tile.setClicked(true);
-
+        tile.reveal(false);
         if (tile.getBomb()) {
-            tile.reveal(false);
             displayBombs(tile);
             return false;
         } else {
-            tile.reveal(false);
-            if (tile.getNumber() > 0) {
-            } else {
+            if (tile.getNumber() == 0) {
                 for (Tile neighbor : getNeighboringTiles(tile)) {
                     clickTile(neighbor);
                 }
@@ -65,17 +61,10 @@ public class TileGrid {
      * @param tile
      */
     public void flagTile(Tile tile) {
-        if (tile == null || (tile.getClicked() && !tile.getFlag())) {
+        if (tile == null) {
             return;
         }
-
-        if (!tile.getFlag()) {
-            tile.setFlag(true);
-            tile.setClicked(true);
-        } else {
-            tile.setFlag(false);
-            tile.setClicked(false);
-        }
+        tile.setFlag();
     }
 
 
@@ -89,7 +78,7 @@ public class TileGrid {
             if (tile.getBomb() && tile != clickedTile) {
                 tile.reveal(true);
                 if (tile.getFlag()) {
-                    tile.setFlag(false);
+                    tile.setFlag();
                 }
             }
         }
