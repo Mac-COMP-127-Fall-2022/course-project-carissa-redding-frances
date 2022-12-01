@@ -5,6 +5,7 @@ import edu.macalester.graphics.Image;
 import edu.macalester.graphics.events.ModifierKey;
 import edu.macalester.graphics.ui.Button;
 import java.awt.Color;
+import java.util.Scanner;
 
 public class Minesweeper {
     private int windowSize = 600;
@@ -30,15 +31,21 @@ public class Minesweeper {
     private void chooseMode() {
         displayedText.setText("Minesweeper");
         formatText();
+
         Button easyButton = new Button("Easy");
-        easyButton.setCenter(windowSize * .25, windowSize * .7);
         Button mediumButton = new Button("Medium");
-        mediumButton.setCenter(windowSize * .5, windowSize * .7);
         Button hardButton = new Button("Hard");
+        Button customButton = new Button("Custom");
+
+        easyButton.setCenter(windowSize * .25, windowSize * .7);
+        mediumButton.setCenter(windowSize * .5, windowSize * .7);
         hardButton.setCenter(windowSize * .75, windowSize * .7);
+        customButton.setCenter(windowSize * .5, windowSize * .8);
+
         canvas.add(easyButton);
         canvas.add(mediumButton);
         canvas.add(hardButton);
+        canvas.add(customButton);
 
         easyButton.onClick(() -> {
             gridSize = 10;
@@ -55,6 +62,17 @@ public class Minesweeper {
         hardButton.onClick(() -> {
             gridSize = 20;
             numBombs = 99;
+            playGame();
+        });
+
+        customButton.onClick(() -> {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Choose grid size: ");
+            gridSize = scanner.nextInt();
+
+            System.out.println("Choose number of bombs: ");
+            numBombs = scanner.nextInt();
+
             playGame();
         });
     }

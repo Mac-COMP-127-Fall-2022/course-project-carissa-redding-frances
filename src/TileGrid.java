@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -32,20 +31,6 @@ public class TileGrid {
                 tileList.add(tile);
             }
         }
-    }
-
-    /**
-     * Checks for a win state, returns true if the player has won
-     * 
-     * @return boolean
-     */
-    public boolean checkWin() {
-        for (Tile tile : tileList) {
-            if (!tile.clicked() && !tile.getBomb()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     // ----------------------------------MAIN BEHAVIOUR---------------------------------
@@ -158,6 +143,20 @@ public class TileGrid {
             }
             tile.setNumber(bombCount);
         }
+    }
+
+    /**
+     * Checks for a win state, returns true if the player has won
+     * 
+     * @return boolean
+     */
+    public boolean checkWin() {
+        for (Tile tile : tileList) {
+            if (!tile.clicked() && !tile.getBomb()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // -------------------------------------HELPERS-------------------------------------
