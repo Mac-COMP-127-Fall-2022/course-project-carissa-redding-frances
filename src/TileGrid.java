@@ -5,23 +5,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Point;
 
 public class TileGrid {
     private GraphicsGroup group = new GraphicsGroup();
     private int tileSize;
     private ArrayList<Tile> tileList = new ArrayList<Tile>();
-    private CanvasWindow canvas;
     private int numBombs;
 
-    public TileGrid(int gridSize, int canvasSize, CanvasWindow canvas, int numBombs) {
+    public TileGrid(int gridSize, int canvasSize, int numBombs) {
         this.numBombs = numBombs;
         this.tileSize = canvasSize / gridSize;
-        this.canvas = canvas;
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
@@ -41,24 +36,18 @@ public class TileGrid {
      * @return boolean
      */
     public boolean clickTile(Tile tile) {
-        if (tile == null || tile.clicked()) {
+        if (tile == null || tile.getClicked()) {
             return true;
         }
-        GraphicsText numberAsObject;
         tile.setClicked(true);
 
         if (tile.getBomb()) {
-            tile.setFillColor(Minesweeper.red);
+            tile.reveal(false);
             displayBombs(tile);
             return false;
         } else {
-            tile.setFillColor(Minesweeper.brown);
+            tile.reveal(false);
             if (tile.getNumber() > 0) {
-                numberAsObject = new GraphicsText(tile.getNumber() + "");
-                numberAsObject.setFillColor(Minesweeper.blue);
-                numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight() * .5);
-                numberAsObject.setCenter(tile.getCenter());
-                canvas.add(numberAsObject);
             } else {
                 for (Tile neighbor : getNeighboringTiles(tile)) {
                     clickTile(neighbor);
@@ -76,18 +65,15 @@ public class TileGrid {
      * @param tile
      */
     public void flagTile(Tile tile) {
-        if (tile == null || (tile.clicked() && !tile.getFlagged())) {
+        if (tile == null || (tile.getClicked() && !tile.getFlag())) {
             return;
         }
 
-        if (!tile.getFlagged()) {
-            group.add(tile.getFlag());
-            tile.getFlag().setCenter(tile.getCenter());
-            tile.setFlagged(true);
+        if (!tile.getFlag()) {
+            tile.setFlag(true);
             tile.setClicked(true);
         } else {
-            group.remove(tile.getFlag());
-            tile.setFlagged(false);
+            tile.setFlag(false);
             tile.setClicked(false);
         }
     }
@@ -101,9 +87,9 @@ public class TileGrid {
     private void displayBombs(Tile clickedTile) {
         for (Tile tile : tileList) {
             if (tile.getBomb() && tile != clickedTile) {
-                tile.setFillColor(Minesweeper.orange);
-                if (tile.getFlagged()) {
-                    group.remove(tile.getFlag());
+                tile.reveal(true);
+                if (tile.getFlag()) {
+                    tile.setFlag(false);
                 }
             }
         }
@@ -152,7 +138,7 @@ public class TileGrid {
      */
     public boolean checkWin() {
         for (Tile tile : tileList) {
-            if (!tile.clicked() && !tile.getBomb()) {
+            if (!tile.getClicked() && !tile.getBomb()) {
                 return false;
             }
         }
@@ -223,7 +209,7 @@ public class TileGrid {
      */
     public boolean checkClicked() {
         for (Tile tile : tileList) {
-            if (tile.clicked()) {
+            if (tile.getClicked()) {
                 return true;
             }
         }

@@ -19,7 +19,7 @@ public class Minesweeper {
 
     // -------------------------------------RUNTIME-------------------------------------
     public Minesweeper() {
-        canvas.setBackground(green);
+        canvas.setBackground(budGreen); // BACKGROUND COLOR
         chooseMode();
     }
 
@@ -94,7 +94,7 @@ public class Minesweeper {
         });
         replay.onClick(() -> {
             canvas.removeAll();
-            canvas.setBackground(green);
+            canvas.setBackground(budGreen); // BACKGROUND COLOR
             chooseMode();
         });
     }
@@ -103,12 +103,13 @@ public class Minesweeper {
         displayedText.setFont(FontStyle.BOLD, windowSize * 0.1);
         displayedText.setWrappingWidth(windowSize - 50);
         displayedText.setCenter(canvas.getCenter());
+        displayedText.setFillColor(blackCoffee); // TITLE COLOR
         canvas.add(displayedText);
     }
 
     private void createFlagCounter() {
         numFlags.setText(numBombs+"");
-        numFlags.setFillColor(grey);
+        numFlags.setFillColor(blackCoffee); // FLAG COUNTER COLOR
         numFlags.setCenter(windowSize * 0.5, windowSize + 50);
         numFlags.setFont(FontStyle.BOLD, 50);
         canvas.add(numFlags);
@@ -119,16 +120,16 @@ public class Minesweeper {
     }
 
     private void updateFlagCounter() {
-        numFlags.setText(numBombs - grid.getTileList().stream().filter((tile)-> tile.getFlagged()).count() + "");
+        numFlags.setText(numBombs - grid.getTileList().stream().filter((tile)-> tile.getFlag()).count() + "");
     }
 
     // -------------------------------------GAMEPLAY------------------------------------
     public void playGame() {
         canvas.removeAll();
-        canvas.setBackground(blue);
+        canvas.setBackground(blueSapphire); // BOMB DISPLAY COLOR
         createFlagCounter();
         running = true;
-        grid = new TileGrid(gridSize, windowSize, canvas, numBombs);
+        grid = new TileGrid(gridSize, windowSize, numBombs);
         grid.getGroup().setPosition(0, 0);
         canvas.add(grid.getGroup());
 
@@ -161,4 +162,15 @@ public class Minesweeper {
     public static Color blue = new Color(27,29,132);
     public static Color brown = new Color(140,103,79);
     public static Color backgroundColor = new Color(52,115,196);
+
+    public static Color budGreen = Color.decode("#6DA34D");
+    public static Color budGreen2 = Color.decode("#83B766");
+    public static Color selectiveYellow = Color.decode("#FFBA08");
+    public static Color blackCoffee = Color.decode("#3E363F");
+    public static Color redOrange = Color.decode("#FF3F00");
+    public static Color blueSapphire = Color.decode("#2D5D7B");
+    public static Color imperialRed = Color.decode("#F71735");
+    public static Color forestGreen = Color.decode("#1E3F20");
+    public static Color brownSugar = Color.decode("#955E42");
+    public static Color vividSkyBlue = Color.decode("#42CAFD");
 }
