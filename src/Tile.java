@@ -8,7 +8,7 @@ import edu.macalester.graphics.Rectangle;
 
 public class Tile extends GraphicsGroup {
     private Color[] hiddenColor = {Minesweeper.budGreen, Minesweeper.budGreen2};
-    private Color clearedColor = Minesweeper.brownSugar;
+    private Color[] clearedColor = {Minesweeper.brownSugar, Minesweeper.brownSugarShade1, Minesweeper.brownSugarTint1};
     private Color[] bombColor = {Minesweeper.redOrange, Minesweeper.selectiveYellow};
     private Color fontColor = Minesweeper.vividSkyBlue;
 
@@ -49,7 +49,7 @@ public class Tile extends GraphicsGroup {
         if(bomb) {
             tile.setFillColor(bombColor[gameOver? 1:0]);
         } else {
-            tile.setFillColor(clearedColor);
+            tile.setFillColor(clearedColor[(int)(3 * Math.random())]);
             if(number > 0) {
                 numberAsObject = new GraphicsText(number + "");
                 numberAsObject.setFillColor(fontColor);

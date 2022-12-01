@@ -17,9 +17,13 @@ public class Minesweeper {
     private GraphicsText displayedText = new GraphicsText();
     GraphicsText numFlags = new GraphicsText();
 
+    private Color backgroundColor = budGreen;
+    private Color textColor = blackCoffee;
+    private Color barColor = blueSapphire;
+
     // -------------------------------------RUNTIME-------------------------------------
     public Minesweeper() {
-        canvas.setBackground(budGreen); // BACKGROUND COLOR
+        canvas.setBackground(backgroundColor);
         chooseMode();
     }
 
@@ -94,7 +98,7 @@ public class Minesweeper {
         });
         replay.onClick(() -> {
             canvas.removeAll();
-            canvas.setBackground(budGreen); // BACKGROUND COLOR
+            canvas.setBackground(backgroundColor);
             chooseMode();
         });
     }
@@ -103,13 +107,13 @@ public class Minesweeper {
         displayedText.setFont(FontStyle.BOLD, windowSize * 0.1);
         displayedText.setWrappingWidth(windowSize - 50);
         displayedText.setCenter(canvas.getCenter());
-        displayedText.setFillColor(blackCoffee); // TITLE COLOR
+        displayedText.setFillColor(textColor);
         canvas.add(displayedText);
     }
 
     private void createFlagCounter() {
         numFlags.setText(numBombs+"");
-        numFlags.setFillColor(blackCoffee); // FLAG COUNTER COLOR
+        numFlags.setFillColor(textColor);
         numFlags.setCenter(windowSize * 0.5, windowSize + 50);
         numFlags.setFont(FontStyle.BOLD, 50);
         canvas.add(numFlags);
@@ -126,7 +130,7 @@ public class Minesweeper {
     // -------------------------------------GAMEPLAY------------------------------------
     public void playGame() {
         canvas.removeAll();
-        canvas.setBackground(blueSapphire); // BOMB DISPLAY COLOR
+        canvas.setBackground(barColor);
         createFlagCounter();
         running = true;
         grid = new TileGrid(gridSize, windowSize, numBombs);
@@ -161,7 +165,7 @@ public class Minesweeper {
     public static Color orange = new Color(196,99,64);
     public static Color blue = new Color(27,29,132);
     public static Color brown = new Color(140,103,79);
-    public static Color backgroundColor = new Color(52,115,196);
+    public static Color royalBlue = new Color(52,115,196);
 
     public static Color budGreen = Color.decode("#6DA34D");
     public static Color budGreen2 = Color.decode("#83B766");
@@ -172,5 +176,7 @@ public class Minesweeper {
     public static Color imperialRed = Color.decode("#F71735");
     public static Color forestGreen = Color.decode("#1E3F20");
     public static Color brownSugar = Color.decode("#955E42");
+    public static Color brownSugarTint1 = Color.decode("#A46648");
+    public static Color brownSugarShade1 = Color.decode("#8A573D");
     public static Color vividSkyBlue = Color.decode("#42CAFD");
 }
