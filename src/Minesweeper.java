@@ -5,6 +5,8 @@ import edu.macalester.graphics.Image;
 import edu.macalester.graphics.events.ModifierKey;
 import edu.macalester.graphics.ui.Button;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Minesweeper {
@@ -21,14 +23,26 @@ public class Minesweeper {
     private Color textColor = blackCoffee;
     private Color barColor = blueSapphire;
 
+    private static List<Animation> animations = new ArrayList<>();
+
     // -------------------------------------RUNTIME-------------------------------------
     public Minesweeper() {
         canvas.setBackground(backgroundColor);
         chooseMode();
+
+        canvas.animate((dt)-> {
+            
+            animations = animations.stream().filter((animation)-> animation.step(dt)).toList();
+            
+        });
     }
 
     public static void main(String[] args) {
         new Minesweeper();
+    }
+
+    public static void addAnimation(Animation a) {
+        animations.add(a);
     }
 
     // ----------------------------------USER INTERFACE---------------------------------

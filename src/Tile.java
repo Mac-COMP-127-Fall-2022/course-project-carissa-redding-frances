@@ -58,6 +58,7 @@ public class Tile extends GraphicsGroup {
                 add(numberAsObject);
             }
         }
+        Minesweeper.addAnimation(new ScreenShake(this));
         clicked = true;
     }
 
