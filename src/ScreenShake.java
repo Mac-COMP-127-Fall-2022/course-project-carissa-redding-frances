@@ -4,25 +4,21 @@ public class ScreenShake implements Animation {
     private double runtime = 0;
     private static final double MAX_RUNTIME = .5;
 
-    private final GraphicsObject shaker;
+    private final GraphicsObject context;
 
-    public ScreenShake(GraphicsObject shaker) {
-        this.shaker = shaker;
+    public ScreenShake(GraphicsObject context) {
+        this.context = context;
     }
 
     @Override
     public boolean step(double dt) {
         runtime += dt;
         if(runtime > MAX_RUNTIME) {
-            System.out.println("removed");
-            shaker.setRotation(0);
+            context.setRotation(0);
             return false;
         } else {
-            System.out.println("runtime: " + runtime);
-            shaker.setRotation(Math.random() * 30 - 15);
+            context.setRotation(Math.random() * 2 - 1);
             return true;
         }
-        
     }
-    
 }

@@ -5,44 +5,32 @@ import edu.macalester.graphics.Image;
 import edu.macalester.graphics.events.ModifierKey;
 import edu.macalester.graphics.ui.Button;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Minesweeper {
     private int windowSize = 600;
     private CanvasWindow canvas = new CanvasWindow("Minesweeper", windowSize, windowSize+80);
     private TileGrid grid;
+    private AniManager animations;
     private boolean running = false;
     private int gridSize;
     private int numBombs;
     private GraphicsText displayedText = new GraphicsText();
-    GraphicsText numFlags = new GraphicsText();
+    private GraphicsText numFlags = new GraphicsText();
 
     private Color backgroundColor = budGreen;
     private Color textColor = blackCoffee;
     private Color barColor = blueSapphire;
 
-    private static List<Animation> animations = new ArrayList<>();
-
     // -------------------------------------RUNTIME-------------------------------------
     public Minesweeper() {
         canvas.setBackground(backgroundColor);
         chooseMode();
-
-        canvas.animate((dt)-> {
-            
-            animations = animations.stream().filter((animation)-> animation.step(dt)).toList();
-            
-        });
+        animations = new AniManager(canvas);
     }
 
     public static void main(String[] args) {
         new Minesweeper();
-    }
-
-    public static void addAnimation(Animation a) {
-        animations.add(a);
     }
 
     // ----------------------------------USER INTERFACE---------------------------------
@@ -147,7 +135,7 @@ public class Minesweeper {
         canvas.setBackground(barColor);
         createFlagCounter();
         running = true;
-        grid = new TileGrid(gridSize, windowSize, numBombs);
+        grid = new TileGrid(gridSize, windowSize, numBombs, animations);
         grid.getGroup().setPosition(0, 0);
         canvas.add(grid.getGroup());
 

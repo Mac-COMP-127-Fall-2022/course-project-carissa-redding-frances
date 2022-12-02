@@ -13,14 +13,16 @@ public class TileGrid {
     private double tileSize;
     private ArrayList<Tile> tileList = new ArrayList<Tile>();
     private int numBombs;
+    private AniManager animations;
 
-    public TileGrid(int gridSize, double canvasSize, int numBombs) {
+    public TileGrid(int gridSize, double canvasSize, int numBombs, AniManager animations) {
         this.numBombs = numBombs;
         this.tileSize = canvasSize / gridSize;
+        this.animations = animations;
 
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                Tile tile = new Tile(tileSize);
+                Tile tile = new Tile(tileSize, animations);
                 tile.setPosition(i * tileSize, j * tileSize);
                 group.add(tile);
                 tileList.add(tile);
@@ -82,6 +84,7 @@ public class TileGrid {
                 }
             }
         }
+        animations.add(new ScreenShake(group));
     }
 
     // --------------------------------------LOGIC--------------------------------------

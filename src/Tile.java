@@ -11,6 +11,7 @@ public class Tile extends GraphicsGroup {
     private Color[] clearedColor = {Minesweeper.brownSugar, Minesweeper.brownSugarShade1, Minesweeper.brownSugarTint1};
     private Color[] bombColor = {Minesweeper.redOrange, Minesweeper.selectiveYellow};
     private Color fontColor = Minesweeper.vividSkyBlue;
+    private Color currentColor;
 
     private Boolean bomb = false;
     private int number = 0;
@@ -20,10 +21,13 @@ public class Tile extends GraphicsGroup {
     private Rectangle tile;
     private static boolean chessboard = false;
     private GraphicsText numberAsObject = new GraphicsText();
+    AniManager animations;
 
-    public Tile(double size) {
+    public Tile(double size, AniManager animations) {
+        this.animations = animations;
         tile = new Rectangle(0,0, size, size);
-        tile.setFillColor(hiddenColor[chessboard? 0:1]);
+        currentColor = hiddenColor[chessboard? 0:1];
+        tile.setFillColor(currentColor);
         add(tile);
         flagImage.setMaxHeight(size);
         flagImage.setCenter(getCenter());
@@ -47,9 +51,9 @@ public class Tile extends GraphicsGroup {
 
     public void reveal(boolean gameOver) {
         if(bomb) {
-            tile.setFillColor(bombColor[gameOver? 1:0]);
+            currentColor = bombColor[gameOver? 1:0];
         } else {
-            tile.setFillColor(clearedColor[(int)(3 * Math.random())]);
+            currentColor = clearedColor[(int)(3 * Math.random())];
             if(number > 0) {
                 numberAsObject = new GraphicsText(number + "");
                 numberAsObject.setFillColor(fontColor);
@@ -58,7 +62,12 @@ public class Tile extends GraphicsGroup {
                 add(numberAsObject);
             }
         }
-        Minesweeper.addAnimation(new ScreenShake(this));
+        tile.setFillColor(currentColor);
+        for(int i = 0; i < 5; i++) {
+            Particle p = new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker());
+            getCanvas().add(p);
+            animations.add(p);
+        }
         clicked = true;
     }
 
