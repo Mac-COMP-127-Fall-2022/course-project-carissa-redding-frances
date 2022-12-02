@@ -52,6 +52,11 @@ public class Tile extends GraphicsGroup {
     public void reveal(boolean gameOver) {
         if(bomb) {
             currentColor = bombColor[gameOver? 1:0];
+            for(int i = 0; i < 5; i++) {
+                Particle p = new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker());
+                getCanvas().add(p);
+                animations.add(p);
+            }
         } else {
             currentColor = clearedColor[(int)(3 * Math.random())];
             if(number > 0) {
@@ -60,14 +65,15 @@ public class Tile extends GraphicsGroup {
                 numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight() * .5);
                 numberAsObject.setCenter(tile.getCenter());
                 add(numberAsObject);
+
+                for(int i = 0; i < 4; i++) {
+                    Particle p = new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker());
+                    getCanvas().add(p);
+                    animations.add(p);
+                }
             }
         }
         tile.setFillColor(currentColor);
-        for(int i = 0; i < 5; i++) {
-            Particle p = new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker());
-            getCanvas().add(p);
-            animations.add(p);
-        }
         clicked = true;
     }
 

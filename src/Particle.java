@@ -2,7 +2,7 @@ import edu.macalester.graphics.Rectangle;
 import java.awt.Color;
 
 public class Particle extends Rectangle implements Animation {
-    private static double width = 5, height = 5;
+    private static double width = 7, height = 7;
 
     private double dx, dy;
 
