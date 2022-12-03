@@ -9,7 +9,7 @@ import java.util.Scanner;
 
 public class Minesweeper {
     private int windowSize = 600;
-    private CanvasWindow canvas = new CanvasWindow("Minesweeper", windowSize, windowSize+80);
+    private CanvasWindow canvas = new CanvasWindow("Minesweeper", windowSize, windowSize + 80);
     private TileGrid grid;
     private AniManager animations;
     private boolean running = false;
@@ -27,6 +27,25 @@ public class Minesweeper {
         canvas.setBackground(backgroundColor);
         chooseMode();
         animations = new AniManager(canvas);
+
+        canvas.onClick(e -> {
+            if (running) {
+                if (!grid.checkClicked()) { // initial click
+                    grid.assignBombPositions(e.getPosition());
+                    grid.clickTile(grid.getTileAt(e.getPosition()));
+                    animations.add(new ScreenShake(grid.getGroup()));
+                } else if (e.getModifiers().contains(ModifierKey.SHIFT)) {
+                    grid.flagTile(grid.getTileAt(e.getPosition()));
+                } else {
+                    if (!grid.clickTile(grid.getTileAt(e.getPosition()))) { // This if statement calls the main game
+                                                                            // behavior
+                        running = false;
+                        endGameMessage(grid.checkWin());
+                    }
+                }
+                updateFlagCounter();
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -114,19 +133,22 @@ public class Minesweeper {
     }
 
     private void createFlagCounter() {
-        numFlags.setText(numBombs+"");
+        numFlags.setText(numBombs + "");
         numFlags.setFillColor(textColor);
         numFlags.setCenter(windowSize * 0.5, windowSize + 50);
         numFlags.setFont(FontStyle.BOLD, 50);
+        
         canvas.add(numFlags);
         Image exampleFlag = new Image("images/redflag.png");
         exampleFlag.setMaxHeight(50);
         exampleFlag.setCenter(numFlags.getCenter().getX() - exampleFlag.getWidth(), numFlags.getCenter().getY());
+        animations.add(new FlyIn(exampleFlag, 0));
+        animations.add(new FlyIn(numFlags, 0));
         canvas.add(exampleFlag);
     }
 
     private void updateFlagCounter() {
-        numFlags.setText(numBombs - grid.getTileList().stream().filter((tile)-> tile.getFlag()).count() + "");
+        numFlags.setText(numBombs - grid.getTileList().stream().filter((tile) -> tile.getFlag()).count() + "");
     }
 
     // -------------------------------------GAMEPLAY------------------------------------
@@ -138,36 +160,13 @@ public class Minesweeper {
         grid = new TileGrid(gridSize, windowSize, numBombs, animations);
         grid.getGroup().setPosition(0, 0);
         canvas.add(grid.getGroup());
-
-        canvas.onClick(e -> {
-            if (running) {
-                if (!grid.checkClicked()) { // initial click
-                    grid.assignBombPositions(e.getPosition());
-                    grid.clickTile(grid.getTileAt(e.getPosition()));
-                } else if (e.getModifiers().contains(ModifierKey.SHIFT)) {
-                    grid.flagTile(grid.getTileAt(e.getPosition()));
-                } else {
-                    if (!grid.clickTile(grid.getTileAt(e.getPosition()))) { // This if statement calls the main game behavior
-                        running = false;
-                        endGameMessage(grid.checkWin());
-                    }
-                }
-                updateFlagCounter();
-            }
-        });
     }
 
     public void setRunning(boolean running) {
         this.running = running;
     }
+
     // -------------------------------------HELPERS-------------------------------------
-    public static Color green = new Color(108,120,55);
-    public static Color grey = new Color(201,201,201);
-    public static Color red = new Color(142,32,32);
-    public static Color orange = new Color(196,99,64);
-    public static Color blue = new Color(27,29,132);
-    public static Color brown = new Color(140,103,79);
-    public static Color royalBlue = new Color(52,115,196);
 
     public static Color budGreen = Color.decode("#6DA34D");
     public static Color budGreen2 = Color.decode("#83B766");

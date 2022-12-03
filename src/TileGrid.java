@@ -26,6 +26,7 @@ public class TileGrid {
                 tile.setPosition(i * tileSize, j * tileSize);
                 group.add(tile);
                 tileList.add(tile);
+                animations.add(new FlyIn(tile, Math.random() * 0.75));
             }
         }
     }
