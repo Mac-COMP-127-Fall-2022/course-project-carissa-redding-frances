@@ -24,4 +24,8 @@ public class AniManager {
         animations.stream().forEach((animation) -> animation.forceQuit());
         animations.clear();
     }
+
+    public List<String> getQueue() {
+        return animations.stream().map((animation) -> animation.toString()).toList();
+    }
 }

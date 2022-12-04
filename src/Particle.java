@@ -27,4 +27,9 @@ public class Particle extends Rectangle implements Animation {
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public String toString() {
+        return "Particle";
+    }
 }

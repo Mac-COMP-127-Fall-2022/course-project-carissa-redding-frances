@@ -51,4 +51,9 @@ public class FlyIn implements Animation {
         context.setY(finalPos);
         
     }
+
+    @Override
+    public String toString() {
+        return "Fly In";
+    }
 }

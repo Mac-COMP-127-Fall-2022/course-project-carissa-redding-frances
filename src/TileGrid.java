@@ -49,6 +49,7 @@ public class TileGrid {
         } else {
             if (tile.getNumber() == 0) {
                 for (Tile neighbor : getNeighboringTiles(tile)) {
+                    animations.add(new ScreenShake(group));
                     clickTile(neighbor);
                 }
             }

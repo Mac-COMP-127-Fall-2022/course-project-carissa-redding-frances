@@ -34,7 +34,6 @@ public class Minesweeper {
                     animations.clearQueue();
                     grid.assignBombPositions(e.getPosition());
                     grid.clickTile(grid.getTileAt(e.getPosition()));
-                    animations.add(new ScreenShake(grid.getGroup()));
                 } else if (e.getModifiers().contains(ModifierKey.SHIFT)) {
                     grid.flagTile(grid.getTileAt(e.getPosition()));
                 } else {
@@ -109,8 +108,11 @@ public class Minesweeper {
             Color[] randomColors = {Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW};
             for(int i = 0; i < 150; i++) {
                 Particle p = new Particle(canvas.getCenter().getX(), canvas.getCenter().getY() - i * 2, randomColors[(int)(Math.random() * randomColors.length)]);
-                animations.add(p);
-                canvas.add(p);
+                animations.add(new Delay(() -> {
+                    animations.add(p);
+                        animations.add(new ScreenShake(grid.getGroup()));
+                    canvas.add(p);
+                }, 0.5 * (int)(i * 0.05)));
             }
         }
         formatText();

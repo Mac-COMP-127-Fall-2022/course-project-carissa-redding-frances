@@ -25,6 +25,10 @@ public class ScreenShake implements Animation {
     @Override
     public void forceQuit() {
         context.setRotation(0);
-        
+    }
+
+    @Override
+    public String toString() {
+        return "Screen Shake";
     }
 }

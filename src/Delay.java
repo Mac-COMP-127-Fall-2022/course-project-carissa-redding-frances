@@ -22,7 +22,10 @@ public class Delay implements Animation {
     @Override
     public void forceQuit() {
         // TODO Auto-generated method stub
-        
     }
-    
+
+    @Override
+    public String toString() {
+        return "Delay";
+    }
 }
