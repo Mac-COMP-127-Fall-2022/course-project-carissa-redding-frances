@@ -22,7 +22,7 @@ public class Minesweeper {
     private Color textColor = blackCoffee;
     private Color barColor = blueSapphire;
 
-    // -------------------------------------RUNTIME-------------------------------------
+    /* --------------------------------- RUNTIME -------------------------------- */
     public Minesweeper() {
         canvas.setBackground(backgroundColor);
         chooseMode();
@@ -52,7 +52,7 @@ public class Minesweeper {
         new Minesweeper();
     }
 
-    // ----------------------------------USER INTERFACE---------------------------------
+    /* ----------------------------- USER INTERFACE ----------------------------- */
     private void chooseMode() {
         displayedText.setText("Minesweeper");
         formatText();
@@ -164,7 +164,7 @@ public class Minesweeper {
         numFlags.setText(numBombs - grid.getTileList().stream().filter((tile) -> tile.getFlag()).count() + "");
     }
 
-    // -------------------------------------GAMEPLAY------------------------------------
+    /* -------------------------------- GAMEPLAY -------------------------------- */
     public void playGame() {
         canvas.removeAll();
         canvas.setBackground(barColor);
@@ -179,7 +179,7 @@ public class Minesweeper {
         this.running = running;
     }
 
-    // -------------------------------------HELPERS-------------------------------------
+    /* --------------------------------- HELPERS -------------------------------- */
 
     public static Color budGreen = Color.decode("#6DA34D");
     public static Color budGreen2 = Color.decode("#83B766");

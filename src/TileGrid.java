@@ -31,7 +31,7 @@ public class TileGrid {
         }
     }
 
-    // ----------------------------------MAIN BEHAVIOUR---------------------------------
+    /* ----------------------------- MAIN BEHAVIOUR ----------------------------- */
     /**
      * Main behaviours activated when players attempt to reveal a tile.
      * 
@@ -95,7 +95,7 @@ public class TileGrid {
         animations.add(new ScreenShake(group));
     }
 
-    // --------------------------------------LOGIC--------------------------------------
+    /* ---------------------------------- LOGIC --------------------------------- */
     /**
      * Randomly assigns bombs to a number of tiles given when the grid is initialized
      * 
@@ -145,7 +145,7 @@ public class TileGrid {
         return true;
     }
 
-    // -------------------------------------HELPERS-------------------------------------
+    /* --------------------------------- HELPERS -------------------------------- */
     /**
      * Returns a list of the four tiles neighboring a given tile in the format {north, south, west,
      * east, northeast, southeast, southwest, northwest}. Entries may be null if tile is on an edge.
