@@ -115,9 +115,11 @@ public class Minesweeper {
         canvas.add(replay);
 
         exit.onClick(() -> {
+            animations.clearQueue();
             canvas.closeWindow();
         });
         replay.onClick(() -> {
+            animations.clearQueue();
             canvas.removeAll();
             canvas.setBackground(backgroundColor);
             chooseMode();

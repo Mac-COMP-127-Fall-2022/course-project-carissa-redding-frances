@@ -77,13 +77,19 @@ public class TileGrid {
      * @param clickedTile
      */
     private void displayBombs(Tile clickedTile) {
-        for (Tile tile : tileList) {
-            if (tile.getBomb() && tile != clickedTile) {
-                tile.reveal(true);
-                if (tile.getFlag()) {
-                    tile.setFlag();
-                }
+        double delay = 0.25;
+        Random rand = new Random();
+        List<Tile> bombList = new ArrayList<Tile>(tileList.stream().filter((tile) -> tile.getBomb()).filter((tile) -> tile != clickedTile).toList());
+        Collections.shuffle(bombList, rand);
+        for (Tile tile : bombList) {
+            if (tile.getFlag()) {
+                tile.setFlag();
             }
+            delay += 0.5;
+            animations.add(new Delay(() -> {
+                tile.reveal(true);
+                animations.add(new ScreenShake(group));
+            }, delay));
         }
         animations.add(new ScreenShake(group));
     }
