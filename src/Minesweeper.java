@@ -31,6 +31,7 @@ public class Minesweeper {
         canvas.onClick(e -> {
             if (running) {
                 if (!grid.checkClicked()) { // initial click
+                    animations.clearQueue();
                     grid.assignBombPositions(e.getPosition());
                     grid.clickTile(grid.getTileAt(e.getPosition()));
                     animations.add(new ScreenShake(grid.getGroup()));
@@ -104,6 +105,14 @@ public class Minesweeper {
 
     private void endGameMessage(boolean win) {
         displayedText.setText("You " + (win ? "Win!" : "Lose!"));
+        if(win) {
+            Color[] randomColors = {Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW};
+            for(int i = 0; i < 150; i++) {
+                Particle p = new Particle(canvas.getCenter().getX(), canvas.getCenter().getY() - i * 2, randomColors[(int)(Math.random() * randomColors.length)]);
+                animations.add(p);
+                canvas.add(p);
+            }
+        }
         formatText();
         Button exit = new Button("Exit");
         Button replay = new Button("Play Again");

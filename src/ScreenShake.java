@@ -21,4 +21,10 @@ public class ScreenShake implements Animation {
             return true;
         }
     }
+
+    @Override
+    public void forceQuit() {
+        context.setRotation(0);
+        
+    }
 }

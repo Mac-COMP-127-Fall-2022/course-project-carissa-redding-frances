@@ -21,6 +21,7 @@ public class AniManager {
     }
 
     public void clearQueue() {
+        animations.stream().forEach((animation) -> animation.forceQuit());
         animations.clear();
     }
 }

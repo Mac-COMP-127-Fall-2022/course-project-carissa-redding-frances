@@ -18,5 +18,11 @@ public class Delay implements Animation {
             return true;
         }
     }
+
+    @Override
+    public void forceQuit() {
+        // TODO Auto-generated method stub
+        
+    }
     
 }

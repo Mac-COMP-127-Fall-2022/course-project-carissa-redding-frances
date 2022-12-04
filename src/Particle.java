@@ -9,7 +9,7 @@ public class Particle extends Rectangle implements Animation {
     public Particle(double x, double y, Color color) {
         super(x, y, width, height);
         dx = Math.random() * 20 - 10;
-        dy = Math.random() * 20 - 10;
+        dy = Math.random() * -10;
         setStrokeWidth(0);
         setFillColor(color);
         setRotation(Math.random() * 360);
@@ -18,7 +18,13 @@ public class Particle extends Rectangle implements Animation {
     @Override
     public boolean step(double dt) {
         moveBy(dx, dy);
-        dy +=  1;
+        dy +=  0.7;
         return getY() < 680;
+    }
+
+    @Override
+    public void forceQuit() {
+        // TODO Auto-generated method stub
+        
     }
 }
