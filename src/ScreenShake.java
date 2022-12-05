@@ -1,3 +1,6 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// An animation that vigorously shakes a given object for half a second
+
 import edu.macalester.graphics.GraphicsObject;
 
 public class ScreenShake implements Animation {
@@ -10,6 +13,11 @@ public class ScreenShake implements Animation {
         this.context = context;
     }
 
+    /**
+     * One frame of animation
+     * @param dt passed from canvas.animate() 
+     * @return false if animation should end
+     */
     @Override
     public boolean step(double dt) {
         runtime += dt;

@@ -1,3 +1,6 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// An animation that delays other runnables
+
 public class Delay implements Animation {
     private double timer; 
 
@@ -8,6 +11,11 @@ public class Delay implements Animation {
         this.waitTime = waitTime;
     }
 
+    /**
+     * One frame of animation
+     * @param dt passed from canvas.animate() 
+     * @return false if animation should end
+     */
     @Override
     public boolean step(double dt) {
         timer += dt;
@@ -21,7 +29,7 @@ public class Delay implements Animation {
 
     @Override
     public void forceQuit() {
-        // TODO Auto-generated method stub
+        
     }
 
     @Override

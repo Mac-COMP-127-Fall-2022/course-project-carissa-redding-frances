@@ -1,3 +1,6 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// A manager for a grid of Tile objects
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -8,6 +11,9 @@ import java.util.Set;
 import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.Point;
 
+/**
+ * Keeps track of creating the tile objects on the screen, random generation, and click behavior
+ */
 public class TileGrid {
     private GraphicsGroup group = new GraphicsGroup();
     private double tileSize;
@@ -15,6 +21,12 @@ public class TileGrid {
     private int numBombs;
     private AniManager animations;
 
+    /**
+     * @param gridSize Height and width of grid (always square)
+     * @param canvasSize Width of canvas window
+     * @param numBombs
+     * @param animations Passing TileGrid an AniManager object to add and manage animations
+     */
     public TileGrid(int gridSize, double canvasSize, int numBombs, AniManager animations) {
         this.numBombs = numBombs;
         this.tileSize = canvasSize / gridSize;
@@ -35,8 +47,7 @@ public class TileGrid {
     /**
      * Main behaviours activated when players attempt to reveal a tile.
      * 
-     * @param tile
-     * @return boolean
+     * @return false if the game is over, otherwise true
      */
     public boolean clickTile(Tile tile) {
         if (tile == null || tile.getClicked()) {
@@ -60,10 +71,6 @@ public class TileGrid {
         return true;
     }
 
-
-    /**
-     * @param tile
-     */
     public void flagTile(Tile tile) {
         if (tile == null) {
             return;
@@ -73,9 +80,7 @@ public class TileGrid {
 
 
     /**
-     * When a bomb is clicked and the player loses, reveals all uncovered bombs.
-     * 
-     * @param clickedTile
+     * When a bomb is clicked and the player loses, reveals all hidden bombs.
      */
     private void displayBombs(Tile clickedTile) {
         double delay = 0.25;
@@ -99,7 +104,7 @@ public class TileGrid {
     /**
      * Randomly assigns bombs to a number of tiles given when the grid is initialized
      * 
-     * @param clickLocation
+     * @param clickLocation of initial click, generates no bombs around this point
      */
     public void assignBombPositions(Point clickLocation) {
         Random rand = new Random();
@@ -132,9 +137,9 @@ public class TileGrid {
     }
 
     /**
-     * Checks for a win state, returns true if the player has won
+     * Checks for a win state
      * 
-     * @return boolean
+     * @return true if the player has won
      */
     public boolean checkWin() {
         for (Tile tile : tileList) {
@@ -146,11 +151,10 @@ public class TileGrid {
     }
 
     /* --------------------------------- HELPERS -------------------------------- */
+
     /**
      * Returns a list of the four tiles neighboring a given tile in the format {north, south, west,
      * east, northeast, southeast, southwest, northwest}. Entries may be null if tile is on an edge.
-     * 
-     * @param tile
      */
     public List<Tile> getNeighboringTiles(Tile tile) {
         if (tile == null) {
@@ -175,8 +179,6 @@ public class TileGrid {
 
     /**
      * Returns the tile at a given point. Will return null if a tile is not present.
-     * 
-     * @param point
      */
     public Tile getTileAt(Point p) {
         for (Tile tile : tileList) {
@@ -189,23 +191,18 @@ public class TileGrid {
 
     /**
      * returns the grid's visual information
-     * 
-     * @return GraphicsGroup
      */
     public GraphicsGroup getGroup() {
         return group;
     }
 
-    /**
-     * currently only for internal testing
-     */
     public ArrayList<Tile> getTileList() {
         return new ArrayList<>(tileList);
     }
 
 
     /**
-     * @return boolean
+     * @return true if any tile has been clicked
      */
     public boolean checkClicked() {
         for (Tile tile : tileList) {

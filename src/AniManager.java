@@ -1,3 +1,6 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// A manager for animations
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +18,7 @@ public class AniManager {
     public void add(Animation a) {
         animations.add(a);
     }
-
+ 
     public int getQueueSize() {
         return animations.size();
     }
@@ -25,6 +28,9 @@ public class AniManager {
         animations.clear();
     }
 
+    /**
+     * @return a list of the names of all the active animations
+     */
     public List<String> getQueue() {
         return animations.stream().map((animation) -> animation.toString()).toList();
     }

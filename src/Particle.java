@@ -1,3 +1,6 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// An particle that experiences gravity
+
 import edu.macalester.graphics.Rectangle;
 import java.awt.Color;
 
@@ -15,6 +18,11 @@ public class Particle extends Rectangle implements Animation {
         setRotation(Math.random() * 360);
     }
 
+    /**
+     * One frame of animation
+     * @param dt passed from canvas.animate() 
+     * @return false if animation should end
+     */
     @Override
     public boolean step(double dt) {
         moveBy(dx, dy);
@@ -24,7 +32,6 @@ public class Particle extends Rectangle implements Animation {
 
     @Override
     public void forceQuit() {
-        // TODO Auto-generated method stub
         
     }
 

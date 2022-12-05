@@ -1,3 +1,6 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// Main Minesweeper file
+
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsText;
@@ -17,12 +20,15 @@ public class Minesweeper {
     private int numBombs;
     private GraphicsText displayedText = new GraphicsText();
     private GraphicsText numFlags = new GraphicsText();
+    private GraphicsText clickTutorial = new GraphicsText();
+    private GraphicsText flagTutorial = new GraphicsText();
 
     private Color backgroundColor = budGreen;
     private Color textColor = blackCoffee;
     private Color barColor = blueSapphire;
 
     /* --------------------------------- RUNTIME -------------------------------- */
+
     public Minesweeper() {
         canvas.setBackground(backgroundColor);
         chooseMode();
@@ -48,11 +54,16 @@ public class Minesweeper {
         });
     }
 
+    
     public static void main(String[] args) {
         new Minesweeper();
     }
 
     /* ----------------------------- USER INTERFACE ----------------------------- */
+
+    /**
+     * Displays the start screen and initializes grid size and game difficulty level based on user input (button press)
+     */
     private void chooseMode() {
         displayedText.setText("Minesweeper");
         formatText();
@@ -102,6 +113,11 @@ public class Minesweeper {
         });
     }
 
+    
+    /** 
+     * Displays end screen depending on whether or not the user wins
+     * @param win true if user has won, false if they have lost
+     */
     private void endGameMessage(boolean win) {
         displayedText.setText("You " + (win ? "Win!" : "Lose!"));
         if(win) {
@@ -110,7 +126,7 @@ public class Minesweeper {
                 Particle p = new Particle(canvas.getCenter().getX(), canvas.getCenter().getY() - i * 2, randomColors[(int)(Math.random() * randomColors.length)]);
                 animations.add(new Delay(() -> {
                     animations.add(p);
-                        animations.add(new ScreenShake(grid.getGroup()));
+                    animations.add(new ScreenShake(grid.getGroup()));
                     canvas.add(p);
                 }, 0.5 * (int)(i * 0.05)));
             }
@@ -158,6 +174,15 @@ public class Minesweeper {
         animations.add(new FlyIn(exampleFlag, 0));
         animations.add(new FlyIn(numFlags, 0));
         canvas.add(exampleFlag);
+
+        clickTutorial.setText("MOUSE CLICK to reveal tile");
+        clickTutorial.setPosition(10, windowSize + 40);
+        clickTutorial.setFont(FontStyle.PLAIN, 20); // TODO:
+
+        flagTutorial.setText("SHIFT + CLICK to flag a tile");
+        flagTutorial.setPosition(10, windowSize + 70);
+        flagTutorial.setFont(FontStyle.PLAIN, 20); // TODO:
+
     }
 
     private void updateFlagCounter() {
@@ -165,6 +190,7 @@ public class Minesweeper {
     }
 
     /* -------------------------------- GAMEPLAY -------------------------------- */
+
     public void playGame() {
         canvas.removeAll();
         canvas.setBackground(barColor);
@@ -175,6 +201,10 @@ public class Minesweeper {
         canvas.add(grid.getGroup());
     }
 
+    
+    /** 
+     * @param running whether or not clicking a tile will alter it
+     */
     public void setRunning(boolean running) {
         this.running = running;
     }

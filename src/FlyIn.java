@@ -1,3 +1,7 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// An animation that flies a given object onto the canvas window
+// Acknowledgements: https://easings.net/#easeOutElastic 
+
 import edu.macalester.graphics.GraphicsObject;
 
 public class FlyIn implements Animation {
@@ -17,6 +21,11 @@ public class FlyIn implements Animation {
         context.setY(initialPos);
     }
 
+    /**
+     * One frame of animation
+     * @param dt passed from canvas.animate() 
+     * @return false if animation should end
+     */
     @Override
     public boolean step(double dt) {
         runtime += dt;
@@ -47,6 +56,12 @@ public class FlyIn implements Animation {
     }
 
     /* --------------------------------- HELPERS -------------------------------- */
+    
+    /**
+     * Controls the speed curve of the object that is being flown in
+     * @param x
+     * @return
+     */
     public double easeOutElastic(double x) {
         double c4 = (2 * Math.PI) / 3;
 

@@ -1,3 +1,6 @@
+// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+// A tile for a game of Minesweeper
+
 import java.awt.Color;
 
 import edu.macalester.graphics.FontStyle;
@@ -23,6 +26,11 @@ public class Tile extends GraphicsGroup {
     private GraphicsText numberAsObject = new GraphicsText();
     AniManager animations;
 
+    /**
+     * Creates a tile for a Minesweeper game
+     * @param size 
+     * @param animations AniManager object passed for particle effect
+     */
     public Tile(double size, AniManager animations) {
         this.animations = animations;
         tile = new Rectangle(0,0, size, size);
@@ -35,6 +43,10 @@ public class Tile extends GraphicsGroup {
     }
 
     /* --------------------------------- Visuals -------------------------------- */
+    
+    /**
+     * Adds or removes a flag image and prevents user from clicking when flagged
+     */
     public void setFlag() {
         if(clicked && !this.flag) {
             return;
@@ -49,6 +61,10 @@ public class Tile extends GraphicsGroup {
         flag = !flag;
     }
 
+    /**
+     * Reveals state of tile (bomb, number, or empty) 
+     * @param gameOver determines whether bombs are displayed as red or orange
+     */
     public void reveal(boolean gameOver) {
         if(bomb) {
             currentColor = bombColor[gameOver? 1:0];
