@@ -49,11 +49,26 @@ public class Minesweeper {
             if (running) {
                 if (!grid.checkClicked()) { // initial click
                     animations.clearQueue();
+                    canvas.add(flagTutorial);
+                    canvas.add(clickTutorial);
                     grid.assignBombPositions(e.getPosition());
                     grid.clickTile(grid.getTileAt(e.getPosition()));
                 } else if (e.getModifiers().contains(ModifierKey.SHIFT)) {
+
+                    // removes tutorial text
+                    if(!flagTutorial.getText().isEmpty() && grid.getTileAt(e.getPosition()) != null && !grid.getTileAt(e.getPosition()).getClicked()) {
+                        flagTutorial.setText("");
+                        canvas.remove(flagTutorial);
+                    }
+
                     grid.flagTile(grid.getTileAt(e.getPosition()));
                 } else {
+                    
+                    // removes tutorial text
+                    if(!clickTutorial.getText().isEmpty() && grid.getTileAt(e.getPosition()) != null && !grid.getTileAt(e.getPosition()).getClicked()) {
+                        clickTutorial.setText("");
+                        canvas.remove(clickTutorial);
+                    }
                     if (!grid.clickTile(grid.getTileAt(e.getPosition()))) { // This if statement calls the main game
                                                                             // behavior
                         running = false;
@@ -187,12 +202,18 @@ public class Minesweeper {
         canvas.add(exampleFlag);
 
         clickTutorial.setText("MOUSE CLICK to reveal tile");
-        clickTutorial.setPosition(10, windowSize + 40);
-        clickTutorial.setFont(FontStyle.PLAIN, 20); // TODO:
+        clickTutorial.setPosition(10, windowSize + 30);
+        clickTutorial.setFont(FontStyle.PLAIN, 16);
+        clickTutorial.setFillColor(Color.white);
 
-        flagTutorial.setText("SHIFT + CLICK to flag a tile");
-        flagTutorial.setPosition(10, windowSize + 70);
-        flagTutorial.setFont(FontStyle.PLAIN, 20); // TODO:
+        flagTutorial.setText("SHIFT + CLICK to place a flag");
+        flagTutorial.setPosition(10, windowSize + 60);
+        flagTutorial.setFont(FontStyle.PLAIN, 16);
+        flagTutorial.setFillColor(Color.white);
+        animations.add(new Delay(() -> {
+            canvas.add(flagTutorial);
+            canvas.add(clickTutorial);
+        }, 2.5));
 
     }
 

@@ -12,6 +12,7 @@ public interface Animation {
      * @return false if animation should end
      */
     boolean step(double dt);
+    
     void forceQuit();
     
 }

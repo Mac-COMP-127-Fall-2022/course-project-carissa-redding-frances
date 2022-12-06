@@ -74,11 +74,10 @@ public class Tile extends GraphicsGroup {
      * @param gameOver determines whether bombs are displayed as red or orange
      */
     public void reveal(boolean gameOver) {
+        int particleCount = 0;
         if(bomb) {
             currentColor = bombColor[gameOver? 1:0];
-            for(int i = 0; i < 20; i++) {
-                animations.add(new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker(), getCanvas()));
-            }
+            particleCount = 20;
         } else {
             currentColor = clearedColor[(int)(3 * Math.random())];
             if(number > 0) {
@@ -87,11 +86,11 @@ public class Tile extends GraphicsGroup {
                 numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight() * .5);
                 numberAsObject.setCenter(tile.getCenter());
                 add(numberAsObject);
-
-                for(int i = 0; i < 4; i++) {
-                    animations.add(new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker(), getCanvas()));
-                }
+                particleCount = 4;
             }
+        }
+        for(int i = 0; i < particleCount; i++) {
+            animations.add(new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker(), getCanvas()));
         }
         tile.setFillColor(currentColor);
         clicked = true;

@@ -17,7 +17,9 @@ public class Fall implements Animation {
         dx = Math.random() * 20 - 10;
         dy = Math.random() * -10;
 
-        canvas.add(context);
+        if(context.getCanvas() == null) {
+            canvas.add(context);
+        }
     }
 
     @Override
