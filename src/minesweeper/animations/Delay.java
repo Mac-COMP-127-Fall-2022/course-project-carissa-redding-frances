@@ -1,6 +1,9 @@
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// An animation that delays other runnables
+package minesweeper.animations;
 
+/**
+ * Delays given processes
+ * @author Redding Sauter
+ */
 public class Delay implements Animation {
     private double timer; 
 

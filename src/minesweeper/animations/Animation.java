@@ -1,6 +1,10 @@
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// An interface for animations
+package minesweeper.animations;
 
+
+/**
+ * Authors: Carissa Bolante, Redding Sauter, Frances McConnell
+ * An interface for animations
+ */
 public interface Animation {
     /**
      * One frame of animation

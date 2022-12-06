@@ -1,3 +1,4 @@
+package minesweeper;
 // Authors: Carissa Bolante, Redding Sauter, Frances McConnell
 // A manager for a grid of Tile objects
 
@@ -9,10 +10,19 @@ import java.util.Random;
 import java.util.Set;
 
 import edu.macalester.graphics.GraphicsGroup;
+import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
+import minesweeper.animations.AniManager;
+import minesweeper.animations.Delay;
+import minesweeper.animations.Fall;
+import minesweeper.animations.FlyIn;
+import minesweeper.animations.ScreenShake;
 
 /**
- * Keeps track of creating the tile objects on the screen, random generation, and click behavior
+ * Creates and orders tile objects, randomly generates bombs, and handles click behavior
+ * @author Frances McConnell
+ * @author Carissa Bolante
+ * @author Redding Sauter
  */
 public class TileGrid {
     private GraphicsGroup group = new GraphicsGroup();
@@ -75,6 +85,13 @@ public class TileGrid {
         if (tile == null) {
             return;
         }
+        if(tile.getFlag()) {
+            Image fallingImage = new Image("minesweeper/images/redflag.png");
+            fallingImage.setMaxHeight(tile.getHeight());
+            fallingImage.setCenter(tile.getCenter());
+                
+            animations.add(new Fall(fallingImage, group.getCanvas()));
+        }
         tile.setFlag();
     }
 
@@ -88,11 +105,14 @@ public class TileGrid {
         List<Tile> bombList = new ArrayList<Tile>(tileList.stream().filter((tile) -> tile.getBomb()).filter((tile) -> tile != clickedTile).toList());
         Collections.shuffle(bombList, rand);
         for (Tile tile : bombList) {
-            if (tile.getFlag()) {
-                tile.setFlag();
-            }
             delay += 0.5;
             animations.add(new Delay(() -> {
+                if(tile.getFlag()) {
+                    Image fallingImage = new Image("minesweeper/images/redflag.png");
+                    fallingImage.setMaxHeight(tile.getHeight());
+                    fallingImage.setCenter(tile.getCenter());
+                    animations.add(new Fall(fallingImage, group.getCanvas()));
+                }
                 tile.reveal(true);
                 animations.add(new ScreenShake(group));
             }, delay));

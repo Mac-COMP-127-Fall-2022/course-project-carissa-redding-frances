@@ -2,8 +2,16 @@
 // An animation that flies a given object onto the canvas window
 // Acknowledgements: https://easings.net/#easeOutElastic 
 
-import edu.macalester.graphics.GraphicsObject;
+package minesweeper.animations;
 
+import edu.macalester.graphics.GraphicsObject;
+/**
+ * An animation that flies a given object onto the canvas window
+ * Acknowledgements: https://easings.net/#easeOutElastic 
+ * @author Redding Sauter (ReddSaut)
+ * @author Frances Mcconnell (francesmcconnell)
+ * @author Carissa Bolante (carissabolante)
+ */
 public class FlyIn implements Animation {
     private final double MAX_RUNTIME = 4;
     private double runtime = 0;

@@ -1,11 +1,15 @@
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// A manager for animations
+package minesweeper.animations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.macalester.graphics.CanvasWindow;
-
+/**
+ * Manages (adds, prioritizes, runs, removes) animations
+ * @author Redding Sauter
+ * @author Carissa Bolante
+ * @author Frances McConnell
+ */
 public class AniManager {
     private List<Animation> animations = new ArrayList<>();
     
@@ -15,6 +19,7 @@ public class AniManager {
             animations.removeAll(copy.stream().filter((animation)-> !animation.step(dt)).toList());
         });
     }
+    
     public void add(Animation a) {
         animations.add(a);
     }

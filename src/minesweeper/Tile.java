@@ -1,3 +1,4 @@
+package minesweeper;
 // Authors: Carissa Bolante, Redding Sauter, Frances McConnell
 // A tile for a game of Minesweeper
 
@@ -8,7 +9,14 @@ import edu.macalester.graphics.GraphicsGroup;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
-
+import minesweeper.animations.AniManager;
+import minesweeper.animations.Particle;
+/**
+ * A single tile in a Minesweeper grid
+ * @author Frances McConnell
+ * @author Carissa Bolante
+ * @author Redding Sauter
+ */
 public class Tile extends GraphicsGroup {
     private Color[] hiddenColor = {Minesweeper.budGreen, Minesweeper.budGreen2};
     private Color[] clearedColor = {Minesweeper.brownSugar, Minesweeper.brownSugarShade1, Minesweeper.brownSugarTint1};
@@ -20,7 +28,7 @@ public class Tile extends GraphicsGroup {
     private int number = 0;
     private boolean clicked = false;
     private boolean flag = false;
-    private Image flagImage = new Image("images/redflag.png");
+    private Image flagImage = new Image("minesweeper/images/redflag.png");
     private Rectangle tile;
     private static boolean chessboard = false;
     private GraphicsText numberAsObject = new GraphicsText();
@@ -69,9 +77,7 @@ public class Tile extends GraphicsGroup {
         if(bomb) {
             currentColor = bombColor[gameOver? 1:0];
             for(int i = 0; i < 20; i++) {
-                Particle p = new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker());
-                getCanvas().add(p);
-                animations.add(p);
+                animations.add(new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker(), getCanvas()));
             }
         } else {
             currentColor = clearedColor[(int)(3 * Math.random())];
@@ -83,14 +89,15 @@ public class Tile extends GraphicsGroup {
                 add(numberAsObject);
 
                 for(int i = 0; i < 4; i++) {
-                    Particle p = new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker());
-                    getCanvas().add(p);
-                    animations.add(p);
+                    animations.add(new Particle(getCenter().getX(), getCenter().getY(), currentColor.darker(), getCanvas()));
                 }
             }
         }
         tile.setFillColor(currentColor);
         clicked = true;
+        if(flag) {
+            setFlag();
+        }
     }
 
     /* ---------------------------------- Logic --------------------------------- */
@@ -120,5 +127,9 @@ public class Tile extends GraphicsGroup {
 
     public String toString() {
         return ("Tile at: " + getX() + ", " + getY() + (bomb ? " is a bomb" : " has number " + number));
+    }
+
+    public Color getColor() {
+        return currentColor;
     }
 }

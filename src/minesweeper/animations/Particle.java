@@ -1,21 +1,27 @@
+package minesweeper.animations;
 // Authors: Carissa Bolante, Redding Sauter, Frances McConnell
 // An particle that experiences gravity
 
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 import java.awt.Color;
 
 public class Particle extends Rectangle implements Animation {
     private static double width = 7, height = 7;
 
+    private final CanvasWindow canvas;
+
     private double dx, dy;
 
-    public Particle(double x, double y, Color color) {
+    public Particle(double x, double y, Color color, CanvasWindow canvas) {
         super(x, y, width, height);
+        this.canvas = canvas;
         dx = Math.random() * 20 - 10;
         dy = Math.random() * -10;
         setStrokeWidth(0);
         setFillColor(color);
         setRotation(Math.random() * 360);
+        canvas.add(this);
     }
 
     /**
@@ -27,12 +33,17 @@ public class Particle extends Rectangle implements Animation {
     public boolean step(double dt) {
         moveBy(dx, dy);
         dy +=  0.7;
-        return getY() < 680;
+        if(getY() < 680) {
+            return true;
+        } else {
+            canvas.remove(this);
+            return false;
+        }
     }
 
     @Override
     public void forceQuit() {
-        
+        canvas.remove(this);
     }
 
     @Override

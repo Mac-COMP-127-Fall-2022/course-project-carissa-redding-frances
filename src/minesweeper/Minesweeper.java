@@ -1,5 +1,4 @@
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// Main Minesweeper file
+package minesweeper;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.FontStyle;
@@ -7,9 +6,21 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.events.ModifierKey;
 import edu.macalester.graphics.ui.Button;
+import minesweeper.animations.AniManager;
+import minesweeper.animations.Delay;
+import minesweeper.animations.FlyIn;
+import minesweeper.animations.Particle;
+import minesweeper.animations.ScreenShake;
+
 import java.awt.Color;
 import java.util.Scanner;
-
+/**
+ * A game of Minesweeper
+ * @author Carissa Bolante, Redding Sauter, Frances McConnell
+ * @author Frances McConnell
+ * @author Carissa Bolante
+ * @author  Redding Sauter
+ */
 public class Minesweeper {
     private int windowSize = 600;
     private CanvasWindow canvas = new CanvasWindow("Minesweeper", windowSize, windowSize + 80);
@@ -123,11 +134,11 @@ public class Minesweeper {
         if(win) {
             Color[] randomColors = {Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW};
             for(int i = 0; i < 150; i++) {
-                Particle p = new Particle(canvas.getCenter().getX(), canvas.getCenter().getY() - i * 2, randomColors[(int)(Math.random() * randomColors.length)]);
+                double yPos = canvas.getCenter().getY() - i * 2;
                 animations.add(new Delay(() -> {
+                    Particle p = new Particle(canvas.getCenter().getX(), yPos, randomColors[(int)(Math.random() * randomColors.length)], canvas);
                     animations.add(p);
                     animations.add(new ScreenShake(grid.getGroup()));
-                    canvas.add(p);
                 }, 0.5 * (int)(i * 0.05)));
             }
         }
@@ -168,7 +179,7 @@ public class Minesweeper {
         numFlags.setFont(FontStyle.BOLD, 50);
         
         canvas.add(numFlags);
-        Image exampleFlag = new Image("images/redflag.png");
+        Image exampleFlag = new Image("minesweeper/images/redflag.png");
         exampleFlag.setMaxHeight(50);
         exampleFlag.setCenter(numFlags.getCenter().getX() - exampleFlag.getWidth(), numFlags.getCenter().getY());
         animations.add(new FlyIn(exampleFlag, 0));

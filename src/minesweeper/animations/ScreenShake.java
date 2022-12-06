@@ -1,3 +1,4 @@
+package minesweeper.animations;
 // Authors: Carissa Bolante, Redding Sauter, Frances McConnell
 // An animation that vigorously shakes a given object for half a second
 
