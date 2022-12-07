@@ -1,11 +1,12 @@
 package minesweeper.animations;
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// An particle that experiences gravity
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Rectangle;
 import java.awt.Color;
-
+/**
+ * A small rectangle that experiences gravity
+ * @author Redding Sauter
+ */
 public class Particle extends Rectangle implements Animation {
     private static double width = 7, height = 7;
 

@@ -1,9 +1,13 @@
 package minesweeper.animations;
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// An animation that vigorously shakes a given object for half a second
 
 import edu.macalester.graphics.GraphicsObject;
 
+/**
+ * Vigorously shakes a given object for half a second
+ * @author Carissa Bolante
+ * @author Redding Sauter
+ * @author Frances McConnell
+ */
 public class ScreenShake implements Animation {
     private double runtime = 0;
     private static final double MAX_RUNTIME = .5;

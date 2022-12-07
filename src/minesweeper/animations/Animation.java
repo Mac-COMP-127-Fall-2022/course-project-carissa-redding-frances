@@ -1,11 +1,13 @@
 package minesweeper.animations;
 
-
 /**
- * Authors: Carissa Bolante, Redding Sauter, Frances McConnell
  * An interface for animations
+ * @author Redding Sauter
+ * @author Carissa Bolante
+ * @author Frances McConnell
  */
 public interface Animation {
+    
     /**
      * One frame of animation
      * @param dt passed from canvas.animate() 
@@ -13,6 +15,10 @@ public interface Animation {
      */
     boolean step(double dt);
     
+
+    /**
+     * Any behaviours an animation should perform before it is deleted mid run
+     */
     void forceQuit();
     
 }

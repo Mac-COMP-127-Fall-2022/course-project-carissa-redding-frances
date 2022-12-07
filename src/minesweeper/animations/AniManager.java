@@ -33,6 +33,17 @@ public class AniManager {
         animations.clear();
     }
 
+    public void remove(String name) {
+        List<Animation> copy = new ArrayList<Animation>(animations);
+        for(Animation animation : copy) {
+            if(animation.toString().equals(name)) {
+                animation.forceQuit();
+                animations.remove(animation);
+            }
+        }
+
+        }
+
     /**
      * @return a list of the names of all the active animations
      */

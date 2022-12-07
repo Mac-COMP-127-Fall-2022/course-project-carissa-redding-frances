@@ -1,6 +1,4 @@
 package minesweeper;
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// A manager for a grid of Tile objects
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,11 +8,9 @@ import java.util.Random;
 import java.util.Set;
 
 import edu.macalester.graphics.GraphicsGroup;
-import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 import minesweeper.animations.AniManager;
 import minesweeper.animations.Delay;
-import minesweeper.animations.Fall;
 import minesweeper.animations.FlyIn;
 import minesweeper.animations.ScreenShake;
 
@@ -85,13 +81,6 @@ public class TileGrid {
         if (tile == null) {
             return;
         }
-        if(tile.getFlag()) {
-            Image fallingImage = new Image("minesweeper/images/redflag.png");
-            fallingImage.setMaxHeight(tile.getHeight());
-            fallingImage.setCenter(tile.getCenter());
-                
-            animations.add(new Fall(fallingImage, group.getCanvas()));
-        }
         tile.setFlag();
     }
 
@@ -107,12 +96,6 @@ public class TileGrid {
         for (Tile tile : bombList) {
             delay += 0.5;
             animations.add(new Delay(() -> {
-                if(tile.getFlag()) {
-                    Image fallingImage = new Image("minesweeper/images/redflag.png");
-                    fallingImage.setMaxHeight(tile.getHeight());
-                    fallingImage.setCenter(tile.getCenter());
-                    animations.add(new Fall(fallingImage, group.getCanvas()));
-                }
                 tile.reveal(true);
                 animations.add(new ScreenShake(group));
             }, delay));

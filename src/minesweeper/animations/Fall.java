@@ -2,7 +2,11 @@ package minesweeper.animations;
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsObject;
-
+/**
+ * Makes a given obect spin and fall off the screen
+ * @author Redding Sauter
+ * @see Particle.java for similar implementation
+ */
 public class Fall implements Animation {
 
     private final GraphicsObject context;

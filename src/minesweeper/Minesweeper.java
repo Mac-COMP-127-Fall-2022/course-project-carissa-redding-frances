@@ -14,9 +14,9 @@ import minesweeper.animations.ScreenShake;
 
 import java.awt.Color;
 import java.util.Scanner;
+
 /**
  * A game of Minesweeper
- * @author Carissa Bolante, Redding Sauter, Frances McConnell
  * @author Frances McConnell
  * @author Carissa Bolante
  * @author  Redding Sauter
@@ -206,7 +206,7 @@ public class Minesweeper {
         clickTutorial.setFont(FontStyle.PLAIN, 16);
         clickTutorial.setFillColor(Color.white);
 
-        flagTutorial.setText("SHIFT + CLICK to place a flag");
+        flagTutorial.setText("SHIFT + CLICK to place flag");
         flagTutorial.setPosition(10, windowSize + 60);
         flagTutorial.setFont(FontStyle.PLAIN, 16);
         flagTutorial.setFillColor(Color.white);

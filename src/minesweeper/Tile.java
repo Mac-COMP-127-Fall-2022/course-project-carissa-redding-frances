@@ -1,6 +1,4 @@
 package minesweeper;
-// Authors: Carissa Bolante, Redding Sauter, Frances McConnell
-// A tile for a game of Minesweeper
 
 import java.awt.Color;
 
@@ -10,7 +8,9 @@ import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Rectangle;
 import minesweeper.animations.AniManager;
+import minesweeper.animations.Fall;
 import minesweeper.animations.Particle;
+import minesweeper.animations.SizeIn;
 /**
  * A single tile in a Minesweeper grid
  * @author Frances McConnell
@@ -60,10 +60,20 @@ public class Tile extends GraphicsGroup {
             return;
         }
         if(!flag) {
+            Image zoomingImage = new Image("minesweeper/images/redflag.png");
+            zoomingImage.setMaxHeight(getHeight());
+            zoomingImage.setCenter(getCenter());
+            animations.add(new SizeIn(zoomingImage, getCanvas()));
+
             flagImage.setCenter(tile.getCenter());
             add(flagImage);
         } else {
             remove(flagImage);
+            animations.remove("Size In");
+            Image fallingImage = new Image("minesweeper/images/redflag.png");
+            fallingImage.setMaxHeight(getHeight());
+            fallingImage.setCenter(getCenter());
+            animations.add(new Fall(fallingImage, getCanvas()));
         }
         clicked = !clicked;
         flag = !flag;
