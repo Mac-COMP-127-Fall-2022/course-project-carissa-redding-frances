@@ -56,7 +56,10 @@ public class Minesweeper {
                 } else if (e.getModifiers().contains(ModifierKey.SHIFT)) {
 
                     // removes tutorial text
-                    if(!flagTutorial.getText().isEmpty() && grid.getTileAt(e.getPosition()) != null && !grid.getTileAt(e.getPosition()).getClicked()) {
+                    if(!flagTutorial.getText().isEmpty() 
+                    && grid.getTileAt(e.getPosition()) != null 
+                    && !grid.getTileAt(e.getPosition()).getClicked()) {
+
                         flagTutorial.setText("");
                         canvas.remove(flagTutorial);
                     }
@@ -65,10 +68,14 @@ public class Minesweeper {
                 } else {
                     
                     // removes tutorial text
-                    if(!clickTutorial.getText().isEmpty() && grid.getTileAt(e.getPosition()) != null && !grid.getTileAt(e.getPosition()).getClicked()) {
+                    if(!clickTutorial.getText().isEmpty() 
+                    && grid.getTileAt(e.getPosition()) != null 
+                    && !grid.getTileAt(e.getPosition()).getClicked()) {
+
                         clickTutorial.setText("");
                         canvas.remove(clickTutorial);
                     }
+
                     if (!grid.clickTile(grid.getTileAt(e.getPosition()))) { // This if statement calls the main game
                                                                             // behavior
                         running = false;

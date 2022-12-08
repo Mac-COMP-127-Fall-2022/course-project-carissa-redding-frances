@@ -1,6 +1,5 @@
 package minesweeper.animations;
 
-import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.Image;
 import edu.macalester.graphics.Point;
 
@@ -14,19 +13,17 @@ public class SizeIn implements Animation {
     private double runtime = 0;
 
     private final Image context;
-    private final CanvasWindow canvas;
     private final Point center;
     private final double initialSize, finalSize;
 
-    public SizeIn(Image context, CanvasWindow canvas) {
+    public SizeIn(Image context) {
         this.context = context;
-        this.canvas = canvas;
         center = context.getCenter();
         finalSize = context.getHeight();
         initialSize = context.getHeight() * 2;
         
         context.setMaxHeight(initialSize);
-        canvas.add(context);
+        context.setCenter(center);
     }
 
     @Override
@@ -37,9 +34,9 @@ public class SizeIn implements Animation {
         context.setMaxHeight(initialSize - stepSize);
         context.setCenter(center);
 
-        if (runtime > MAX_RUNTIME + 0.1) {
+        if (runtime > MAX_RUNTIME) {
             context.setMaxHeight(finalSize);
-            canvas.remove(context);
+            context.setCenter(center);
             return false;
         } else {
             return true;
@@ -49,7 +46,7 @@ public class SizeIn implements Animation {
     @Override
     public void forceQuit() {
         context.setMaxHeight(finalSize);
-        canvas.remove(context);
+        context.setCenter(center);
     }
 
     private double easeOutBack(double x) {

@@ -40,7 +40,7 @@ public class FlyIn implements Animation {
         }
 
 
-        if (runtime > MAX_RUNTIME + 0.1) {
+        if (runtime > MAX_RUNTIME + 0.2) {
             context.setY(finalPos);
             return false;
         } else {
@@ -51,7 +51,6 @@ public class FlyIn implements Animation {
     @Override
     public void forceQuit() {
         context.setY(finalPos);
-
     }
 
     @Override

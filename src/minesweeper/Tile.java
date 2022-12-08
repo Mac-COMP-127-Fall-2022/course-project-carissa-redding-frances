@@ -63,13 +63,14 @@ public class Tile extends GraphicsGroup {
             Image zoomingImage = new Image("minesweeper/images/redflag.png");
             zoomingImage.setMaxHeight(getHeight());
             zoomingImage.setCenter(getCenter());
-            animations.add(new SizeIn(zoomingImage, getCanvas()));
+            
 
             flagImage.setCenter(tile.getCenter());
             add(flagImage);
+            animations.add(new SizeIn(flagImage));
         } else {
-            remove(flagImage);
             animations.remove("Size In");
+            remove(flagImage);
             Image fallingImage = new Image("minesweeper/images/redflag.png");
             fallingImage.setMaxHeight(getHeight());
             fallingImage.setCenter(getCenter());

@@ -28,11 +28,19 @@ public class AniManager {
         return animations.size();
     }
 
+    /**
+     * Runs the force quit behaviour for all animations in queue and removes them
+     */
     public void clearQueue() {
         animations.stream().forEach((animation) -> animation.forceQuit());
         animations.clear();
     }
 
+    /**
+     * Removes all animations with the given name
+     * @param name formatted with capitals and spaces
+     * @see getQueue returns the same formatting
+     */
     public void remove(String name) {
         List<Animation> copy = new ArrayList<Animation>(animations);
         for(Animation animation : copy) {
