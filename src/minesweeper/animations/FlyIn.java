@@ -16,13 +16,16 @@ public class FlyIn implements Animation {
     private final double finalPos, initialPos;
     private final GraphicsObject context;
     private final double delay;
+    private final double windowSize;
 
 
-    public FlyIn(GraphicsObject context, double delay) {
+    public FlyIn(GraphicsObject context, double delay, double windowSize) {
         this.context = context;
         this.delay = delay;
+        this.windowSize = windowSize;
+        
         finalPos = context.getY();
-        initialPos = context.getY() - 600;
+        initialPos = context.getY() - windowSize;
         context.setY(initialPos);
     }
 
@@ -34,7 +37,7 @@ public class FlyIn implements Animation {
     @Override
     public boolean step(double dt) {
         runtime += dt;
-        double stepSize = 600 * easeOutElastic((runtime - delay) / MAX_RUNTIME);
+        double stepSize = windowSize * easeOutElastic((runtime - delay) / MAX_RUNTIME);
         if (runtime > delay) {
             context.setPosition(context.getX(), stepSize + initialPos);
         }

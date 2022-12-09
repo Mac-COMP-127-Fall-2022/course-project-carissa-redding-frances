@@ -12,16 +12,26 @@ import edu.macalester.graphics.CanvasWindow;
  */
 public class AniManager {
     private List<Animation> animations = new ArrayList<>();
+    private List<Runnable> runningList = new ArrayList<>();
+    private double windowSize;
     
     public AniManager(CanvasWindow canvas) {
+        windowSize = canvas.getWidth();
+
         canvas.animate((dt)-> {
+            windowSize = Math.min(canvas.getWidth(), canvas.getHeight() - 80);
+
             List<Animation> copy = new ArrayList<Animation>(animations);
             animations.removeAll(copy.stream().filter((animation)-> !animation.step(dt)).toList());
+            runningList.stream().forEach((r) -> r.run());
         });
     }
     
     public void add(Animation a) {
         animations.add(a);
+    }
+    public void add(Runnable r) {
+        runningList.add(r);
     }
  
     public int getQueueSize() {
@@ -57,5 +67,9 @@ public class AniManager {
      */
     public List<String> getQueue() {
         return animations.stream().map((animation) -> animation.toString()).toList();
+    }
+
+    public double getWindowSize() {
+        return windowSize;
     }
 }

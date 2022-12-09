@@ -44,9 +44,26 @@ public class TileGrid {
                 tile.setPosition(i * tileSize, j * tileSize);
                 group.add(tile);
                 tileList.add(tile);
-                animations.add(new FlyIn(tile, Math.random()));
+                animations.add(new FlyIn(tile, Math.random(), canvasSize));
             }
         }
+        animations.add(() -> {
+            if(!animations.getQueue().contains("Fly In")) {
+                int i=0;
+                int j=0;
+                tileSize = animations.getWindowSize() / gridSize;
+                for (Tile tile : tileList) {
+                    tile.setPosition(i * tileSize, j * tileSize);
+                    tile.setSize(tileSize);
+                    if(j + 1 < gridSize) {
+                        j++;
+                    } else {
+                        j = 0;
+                        i++;
+                    }
+                }
+            }
+        }); 
     }
 
     /* ----------------------------- MAIN BEHAVIOUR ----------------------------- */

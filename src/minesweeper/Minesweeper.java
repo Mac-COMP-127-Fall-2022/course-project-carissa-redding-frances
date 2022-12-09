@@ -19,7 +19,7 @@ import java.util.Scanner;
  * A game of Minesweeper
  * @author Frances McConnell
  * @author Carissa Bolante
- * @author  Redding Sauter
+ * @author Redding Sauter
  */
 public class Minesweeper {
     private int windowSize = 600;
@@ -33,6 +33,7 @@ public class Minesweeper {
     private GraphicsText numFlags = new GraphicsText();
     private GraphicsText clickTutorial = new GraphicsText();
     private GraphicsText flagTutorial = new GraphicsText();
+    private Image exampleFlag = new Image("minesweeper/images/redflag.png");
 
     private Color backgroundColor = budGreen;
     private Color textColor = blackCoffee;
@@ -44,6 +45,16 @@ public class Minesweeper {
         canvas.setBackground(backgroundColor);
         chooseMode();
         animations = new AniManager(canvas);
+
+        animations.add(() -> {
+            if(!animations.getQueue().contains("Fly In")) { // TODO: fix scaling
+                // displayedText.setCenter(point);
+                // numFlags.setCenter(point);
+                // clickTutorial.setPosition(position);
+                // flagTutorial.setPosition(position);
+                exampleFlag.setCenter(numFlags.getCenter().getX() - exampleFlag.getWidth(), numFlags.getCenter().getY());
+            }
+        });
 
         canvas.onClick(e -> {
             if (running) {
@@ -201,11 +212,10 @@ public class Minesweeper {
         numFlags.setFont(FontStyle.BOLD, 50);
         
         canvas.add(numFlags);
-        Image exampleFlag = new Image("minesweeper/images/redflag.png");
         exampleFlag.setMaxHeight(50);
         exampleFlag.setCenter(numFlags.getCenter().getX() - exampleFlag.getWidth(), numFlags.getCenter().getY());
-        animations.add(new FlyIn(exampleFlag, 0));
-        animations.add(new FlyIn(numFlags, 0));
+        animations.add(new FlyIn(exampleFlag, 0, windowSize));
+        animations.add(new FlyIn(numFlags, 0, windowSize));
         canvas.add(exampleFlag);
 
         clickTutorial.setText("MOUSE CLICK to reveal tile");

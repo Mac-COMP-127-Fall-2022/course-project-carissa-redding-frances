@@ -18,6 +18,8 @@ import minesweeper.animations.SizeIn;
  * @author Redding Sauter
  */
 public class Tile extends GraphicsGroup {
+    private final double initialSize;
+
     private Color[] hiddenColor = {Minesweeper.budGreen, Minesweeper.budGreen2};
     private Color[] clearedColor = {Minesweeper.brownSugar, Minesweeper.brownSugarShade1, Minesweeper.brownSugarTint1};
     private Color[] bombColor = {Minesweeper.redOrange, Minesweeper.selectiveYellow};
@@ -40,6 +42,7 @@ public class Tile extends GraphicsGroup {
      * @param animations AniManager object passed for particle effect
      */
     public Tile(double size, AniManager animations) {
+        this.initialSize = size;
         this.animations = animations;
         tile = new Rectangle(0,0, size, size);
         currentColor = hiddenColor[chessboard? 0:1];
@@ -48,6 +51,7 @@ public class Tile extends GraphicsGroup {
         flagImage.setMaxHeight(size);
         flagImage.setCenter(getCenter());
         chessboard = !chessboard;
+
     }
 
     /* --------------------------------- Visuals -------------------------------- */
@@ -141,5 +145,13 @@ public class Tile extends GraphicsGroup {
 
     public Color getColor() {
         return currentColor;
+    }
+
+    public void setSize(double size) {
+        tile.setScale(size / initialSize);
+        flagImage.setMaxHeight(size);
+        flagImage.setCenter(tile.getCenter());
+        numberAsObject.setFontSize(size * 0.5);
+        numberAsObject.setCenter(tile.getCenter());
     }
 }
