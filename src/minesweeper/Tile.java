@@ -45,6 +45,8 @@ public class Tile extends GraphicsGroup {
         this.initialSize = size;
         this.animations = animations;
         tile = new Rectangle(0,0, size, size);
+        tile.setAnchor(0, 0);
+        setAnchor(0, 0);
         currentColor = hiddenColor[chessboard? 0:1];
         tile.setFillColor(currentColor);
         add(tile);

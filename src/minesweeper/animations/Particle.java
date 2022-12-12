@@ -19,7 +19,7 @@ public class Particle extends Rectangle implements Animation {
     public Particle(double x, double y, Color color, CanvasWindow canvas) {
         super(x, y, width, height);
         this.canvas = canvas;
-        canvasSize = canvas.getWidth();
+        canvasSize = Math.min(canvas.getWidth(), canvas.getHeight() - 80);
         gravity = canvasSize * 0.0011667;
 
         setScale(canvasSize / 600);

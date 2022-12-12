@@ -19,7 +19,7 @@ public class Fall implements Animation {
     public Fall(GraphicsObject context, CanvasWindow canvas) {
         this.context = context;
         this.canvas = canvas;
-        canvasSize = canvas.getWidth();
+        canvasSize = Math.min(canvas.getWidth(), canvas.getHeight() - 80);
         gravity = canvasSize * 0.0011667;
 
         dx = Math.random() * canvasSize / 30 - canvasSize / 60;
