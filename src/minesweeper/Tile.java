@@ -33,7 +33,7 @@ public class Tile extends GraphicsGroup {
     private Image flagImage = new Image("minesweeper/images/redflag.png");
     private Rectangle tile;
     private static boolean chessboard = false;
-    private GraphicsText numberAsObject = new GraphicsText();
+    private GraphicsText numberAsObject = new GraphicsText("");
     AniManager animations;
 
     /**
@@ -98,7 +98,7 @@ public class Tile extends GraphicsGroup {
             if(number > 0) {
                 numberAsObject = new GraphicsText(number + "");
                 numberAsObject.setFillColor(fontColor);
-                numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight() * .5);
+                numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight() * 0.5 * tile.getScaleY());
                 numberAsObject.setCenter(tile.getCenter());
                 add(numberAsObject);
                 particleCount = 4;

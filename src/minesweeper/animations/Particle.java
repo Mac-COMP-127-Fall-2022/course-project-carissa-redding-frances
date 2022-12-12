@@ -11,14 +11,21 @@ public class Particle extends Rectangle implements Animation {
     private static double width = 7, height = 7;
 
     private final CanvasWindow canvas;
+    private final double canvasSize;
+    private final double gravity;
 
     private double dx, dy;
 
     public Particle(double x, double y, Color color, CanvasWindow canvas) {
         super(x, y, width, height);
         this.canvas = canvas;
-        dx = Math.random() * 20 - 10;
-        dy = Math.random() * -10;
+        canvasSize = canvas.getWidth();
+        gravity = canvasSize * 0.0011667;
+
+        setScale(canvasSize / 600);
+
+        dx = Math.random() * canvasSize / 30 - canvasSize / 60;
+        dy = Math.random() * canvasSize / 60 * -1;
         setStrokeWidth(0);
         setFillColor(color);
         setRotation(Math.random() * 360);
@@ -33,8 +40,8 @@ public class Particle extends Rectangle implements Animation {
     @Override
     public boolean step(double dt) {
         moveBy(dx, dy);
-        dy +=  0.7;
-        if(getY() < 680) {
+        dy +=  gravity;
+        if(getY() < canvas.getHeight()) {
             return true;
         } else {
             canvas.remove(this);

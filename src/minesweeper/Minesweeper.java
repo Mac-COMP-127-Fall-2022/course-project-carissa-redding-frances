@@ -17,23 +17,30 @@ import java.util.Scanner;
 
 /**
  * A game of Minesweeper
+ * 
  * @author Frances McConnell
  * @author Carissa Bolante
  * @author Redding Sauter
  */
 public class Minesweeper {
-    private int windowSize = 600;
-    private CanvasWindow canvas = new CanvasWindow("Minesweeper", windowSize, windowSize + 80);
-    private TileGrid grid;
-    private AniManager animations;
-    private boolean running = false;
+    private double windowSize = 600;
     private int gridSize;
     private int numBombs;
+    private boolean running = false;
+
+    private TileGrid grid;
+    private AniManager animations;
+
+    private CanvasWindow canvas = new CanvasWindow("Minesweeper", (int) windowSize, (int) windowSize + 80);
     private GraphicsText displayedText = new GraphicsText();
     private GraphicsText numFlags = new GraphicsText();
     private GraphicsText clickTutorial = new GraphicsText();
     private GraphicsText flagTutorial = new GraphicsText();
     private Image exampleFlag = new Image("minesweeper/images/redflag.png");
+    private Button easyButton = new Button("Easy");
+    private Button mediumButton = new Button("Medium");
+    private Button hardButton = new Button("Hard");
+    private Button customButton = new Button("Custom");
 
     private Color backgroundColor = budGreen;
     private Color textColor = blackCoffee;
@@ -46,13 +53,30 @@ public class Minesweeper {
         chooseMode();
         animations = new AniManager(canvas);
 
-        animations.add(() -> {
-            if(!animations.getQueue().contains("Fly In")) { // TODO: fix scaling
-                // displayedText.setCenter(point);
-                // numFlags.setCenter(point);
-                // clickTutorial.setPosition(position);
-                // flagTutorial.setPosition(position);
-                exampleFlag.setCenter(numFlags.getCenter().getX() - exampleFlag.getWidth(), numFlags.getCenter().getY());
+        animations.addSizer(() -> {
+            windowSize = animations.getWindowSize();
+
+            displayedText.setCenter(windowSize / 2, windowSize / 2);
+            displayedText.setFont(FontStyle.BOLD, windowSize * 0.1);
+
+            numFlags.setCenter(windowSize / 2, windowSize + 50);
+            numFlags.setFont(FontStyle.BOLD, windowSize * 0.0833);
+
+            clickTutorial.setPosition(10, windowSize + 30);
+            clickTutorial.setFont(FontStyle.PLAIN, windowSize * 0.0266);
+
+            flagTutorial.setPosition(10, windowSize + 60);
+            flagTutorial.setFont(FontStyle.PLAIN, windowSize * 0.0266);
+
+            exampleFlag.setMaxHeight(windowSize * .0833);
+            exampleFlag.setCenter(numFlags.getCenter().getX() - exampleFlag.getWidth(),
+                numFlags.getCenter().getY());
+
+            if (easyButton.getCanvas() != null) {
+                easyButton.setCenter(windowSize * .25, windowSize * .7);
+                mediumButton.setCenter(windowSize * .5, windowSize * .7);
+                hardButton.setCenter(windowSize * .75, windowSize * .7);
+                customButton.setCenter(windowSize * .5, windowSize * .8);
             }
         });
 
@@ -62,14 +86,15 @@ public class Minesweeper {
                     animations.clearQueue();
                     canvas.add(flagTutorial);
                     canvas.add(clickTutorial);
+                    animations.runSizers();
                     grid.assignBombPositions(e.getPosition());
                     grid.clickTile(grid.getTileAt(e.getPosition()));
                 } else if (e.getModifiers().contains(ModifierKey.SHIFT)) {
 
                     // removes tutorial text
-                    if(!flagTutorial.getText().isEmpty() 
-                    && grid.getTileAt(e.getPosition()) != null 
-                    && !grid.getTileAt(e.getPosition()).getClicked()) {
+                    if (!flagTutorial.getText().isEmpty()
+                        && grid.getTileAt(e.getPosition()) != null
+                        && !grid.getTileAt(e.getPosition()).getClicked()) {
 
                         flagTutorial.setText("");
                         canvas.remove(flagTutorial);
@@ -77,11 +102,11 @@ public class Minesweeper {
 
                     grid.flagTile(grid.getTileAt(e.getPosition()));
                 } else {
-                    
+
                     // removes tutorial text
-                    if(!clickTutorial.getText().isEmpty() 
-                    && grid.getTileAt(e.getPosition()) != null 
-                    && !grid.getTileAt(e.getPosition()).getClicked()) {
+                    if (!clickTutorial.getText().isEmpty()
+                        && grid.getTileAt(e.getPosition()) != null
+                        && !grid.getTileAt(e.getPosition()).getClicked()) {
 
                         clickTutorial.setText("");
                         canvas.remove(clickTutorial);
@@ -98,7 +123,7 @@ public class Minesweeper {
         });
     }
 
-    
+
     public static void main(String[] args) {
         new Minesweeper();
     }
@@ -106,16 +131,12 @@ public class Minesweeper {
     /* ----------------------------- USER INTERFACE ----------------------------- */
 
     /**
-     * Displays the start screen and initializes grid size and game difficulty level based on user input (button press)
+     * Displays the start screen and initializes grid size and game difficulty level based on user input
+     * (button press)
      */
     private void chooseMode() {
         displayedText.setText("Minesweeper");
         formatText();
-
-        Button easyButton = new Button("Easy");
-        Button mediumButton = new Button("Medium");
-        Button hardButton = new Button("Hard");
-        Button customButton = new Button("Custom");
 
         easyButton.setCenter(windowSize * .25, windowSize * .7);
         mediumButton.setCenter(windowSize * .5, windowSize * .7);
@@ -157,22 +178,25 @@ public class Minesweeper {
         });
     }
 
-    
-    /** 
+
+    /**
      * Displays end screen depending on whether or not the user wins
+     * 
      * @param win true if user has won, false if they have lost
      */
     private void endGameMessage(boolean win) {
         displayedText.setText("You " + (win ? "Win!" : "Lose!"));
-        if(win) {
-            Color[] randomColors = {Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.YELLOW};
-            for(int i = 0; i < 150; i++) {
+        if (win) {
+            Color[] randomColors = { Color.BLUE, Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK,
+                Color.RED, Color.YELLOW };
+            for (int i = 0; i < 150; i++) {
                 double yPos = canvas.getCenter().getY() - i * 2;
                 animations.add(new Delay(() -> {
-                    Particle p = new Particle(canvas.getCenter().getX(), yPos, randomColors[(int)(Math.random() * randomColors.length)], canvas);
+                    Particle p = new Particle(canvas.getCenter().getX(), yPos,
+                        randomColors[(int) (Math.random() * randomColors.length)], canvas);
                     animations.add(p);
                     animations.add(new ScreenShake(grid.getGroup()));
-                }, 0.5 * (int)(i * 0.05)));
+                }, 0.5 * (int) (i * 0.05)));
             }
         }
         formatText();
@@ -210,7 +234,7 @@ public class Minesweeper {
         numFlags.setFillColor(textColor);
         numFlags.setCenter(windowSize * 0.5, windowSize + 50);
         numFlags.setFont(FontStyle.BOLD, 50);
-        
+
         canvas.add(numFlags);
         exampleFlag.setMaxHeight(50);
         exampleFlag.setCenter(numFlags.getCenter().getX() - exampleFlag.getWidth(), numFlags.getCenter().getY());
@@ -250,8 +274,8 @@ public class Minesweeper {
         canvas.add(grid.getGroup());
     }
 
-    
-    /** 
+
+    /**
      * @param running whether or not clicking a tile will alter it
      */
     public void setRunning(boolean running) {

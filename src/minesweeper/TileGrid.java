@@ -16,6 +16,7 @@ import minesweeper.animations.ScreenShake;
 
 /**
  * Creates and orders tile objects, randomly generates bombs, and handles click behavior
+ * 
  * @author Frances McConnell
  * @author Carissa Bolante
  * @author Redding Sauter
@@ -28,7 +29,7 @@ public class TileGrid {
     private AniManager animations;
 
     /**
-     * @param gridSize Height and width of grid (always square)
+     * @param gridSize   Height and width of grid (always square)
      * @param canvasSize Width of canvas window
      * @param numBombs
      * @param animations Passing TileGrid an AniManager object to add and manage animations
@@ -47,23 +48,21 @@ public class TileGrid {
                 animations.add(new FlyIn(tile, Math.random(), canvasSize));
             }
         }
-        animations.add(() -> {
-            if(!animations.getQueue().contains("Fly In")) {
-                int i=0;
-                int j=0;
-                tileSize = animations.getWindowSize() / gridSize;
-                for (Tile tile : tileList) {
-                    tile.setPosition(i * tileSize, j * tileSize);
-                    tile.setSize(tileSize);
-                    if(j + 1 < gridSize) {
-                        j++;
-                    } else {
-                        j = 0;
-                        i++;
-                    }
+        animations.addSizer(() -> {
+            int i = 0;
+            int j = 0;
+            tileSize = animations.getWindowSize() / gridSize;
+            for (Tile tile : tileList) {
+                tile.setPosition(i * tileSize, j * tileSize);
+                tile.setSize(tileSize);
+                if (j + 1 < gridSize) {
+                    j++;
+                } else {
+                    j = 0;
+                    i++;
                 }
             }
-        }); 
+        });
     }
 
     /* ----------------------------- MAIN BEHAVIOUR ----------------------------- */
@@ -108,7 +107,8 @@ public class TileGrid {
     private void displayBombs(Tile clickedTile) {
         double delay = 0.25;
         Random rand = new Random();
-        List<Tile> bombList = new ArrayList<Tile>(tileList.stream().filter((tile) -> tile.getBomb()).filter((tile) -> tile != clickedTile).toList());
+        List<Tile> bombList = new ArrayList<Tile>(
+            tileList.stream().filter((tile) -> tile.getBomb()).filter((tile) -> tile != clickedTile).toList());
         Collections.shuffle(bombList, rand);
         for (Tile tile : bombList) {
             delay += 0.5;
