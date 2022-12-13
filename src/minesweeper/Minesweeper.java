@@ -60,7 +60,7 @@ public class Minesweeper {
             displayedText.setFont(FontStyle.BOLD, windowSize * 0.1);
 
             numFlags.setCenter(windowSize / 2, windowSize + 50);
-            numFlags.setFont(FontStyle.BOLD, windowSize * 0.0833);
+            numFlags.setFont(FontStyle.BOLD, windowSize * 0.07);
 
             clickTutorial.setPosition(10, windowSize + 30);
             clickTutorial.setFont(FontStyle.PLAIN, windowSize * 0.0266);

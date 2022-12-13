@@ -51,7 +51,7 @@ public class Tile extends GraphicsGroup {
         tile.setFillColor(currentColor);
         add(tile);
         flagImage.setMaxHeight(size);
-        flagImage.setCenter(getCenter());
+        flagImage.setCenter(tile.getCenter().scale(tile.getScaleX()));
         chessboard = !chessboard;
 
     }
@@ -66,12 +66,6 @@ public class Tile extends GraphicsGroup {
             return;
         }
         if(!flag) {
-            Image zoomingImage = new Image("minesweeper/images/redflag.png");
-            zoomingImage.setMaxHeight(getHeight());
-            zoomingImage.setCenter(getCenter());
-            
-
-            flagImage.setCenter(tile.getCenter());
             add(flagImage);
             animations.add(new SizeIn(flagImage));
         } else {
@@ -101,7 +95,7 @@ public class Tile extends GraphicsGroup {
                 numberAsObject = new GraphicsText(number + "");
                 numberAsObject.setFillColor(fontColor);
                 numberAsObject.setFont(FontStyle.PLAIN, tile.getHeight() * 0.5 * tile.getScaleY());
-                numberAsObject.setCenter(tile.getCenter());
+                numberAsObject.setCenter(tile.getCenter().scale(tile.getScaleX()));
                 add(numberAsObject);
                 particleCount = 4;
             }
@@ -152,8 +146,8 @@ public class Tile extends GraphicsGroup {
     public void setSize(double size) {
         tile.setScale(size / initialSize);
         flagImage.setMaxHeight(size);
-        flagImage.setCenter(tile.getCenter());
+        flagImage.setCenter(tile.getCenter().scale(tile.getScaleX()));
         numberAsObject.setFontSize(size * 0.5);
-        numberAsObject.setCenter(tile.getCenter());
+        numberAsObject.setCenter(tile.getCenter().scale(tile.getScaleX()));
     }
 }
