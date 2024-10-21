@@ -36,7 +36,7 @@ public class Minesweeper {
     private GraphicsText numFlags = new GraphicsText();
     private GraphicsText clickTutorial = new GraphicsText();
     private GraphicsText flagTutorial = new GraphicsText();
-    private Image exampleFlag = new Image("minesweeper/images/redflag.png");
+    private Image exampleFlag = new Image("redflag.png");
     private Button easyButton = new Button("Easy");
     private Button mediumButton = new Button("Medium");
     private Button hardButton = new Button("Hard");

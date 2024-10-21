@@ -30,7 +30,7 @@ public class Tile extends GraphicsGroup {
     private int number = 0;
     private boolean clicked = false;
     private boolean flag = false;
-    private Image flagImage = new Image("minesweeper/images/redflag.png");
+    private Image flagImage = new Image("redflag.png");
     private Rectangle tile;
     private static boolean chessboard = false;
     private GraphicsText numberAsObject = new GraphicsText("");
@@ -71,7 +71,7 @@ public class Tile extends GraphicsGroup {
         } else {
             animations.remove("Size In");
             remove(flagImage);
-            Image fallingImage = new Image("minesweeper/images/redflag.png");
+            Image fallingImage = new Image("redflag.png");
             fallingImage.setMaxHeight(getHeight());
             fallingImage.setCenter(getCenter());
             animations.add(new Fall(fallingImage, getCanvas()));
